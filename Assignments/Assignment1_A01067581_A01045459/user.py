@@ -14,5 +14,4 @@ class User:
     @staticmethod
     def load_test_users(self):
         return User("Bruce Wayne", 10, "Student", 12345678, "Gotham Bank", 98.32,
-                    40)
-
+                    40.2)
