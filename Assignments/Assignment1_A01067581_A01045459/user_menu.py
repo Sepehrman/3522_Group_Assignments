@@ -3,7 +3,6 @@ class UserMenu:
     def __init__(self, budgets):
         self._budgets = budgets
 
-
     def view_budget(self):
         return "---- Budgets ----\n" \
                "Amount Left: " \
@@ -18,4 +17,3 @@ class UserMenu:
 
     def view_bank_account_details(self):
         pass
-
