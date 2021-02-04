@@ -16,3 +16,9 @@ class User:
         return User("Bruce Wayne", 10, "Student", 12345678, "Gotham Bank", 98.32,
                     {"Games and Entertainment": 30, "Clothing and Accessories": 20, "Eating Out": 18,
                      "Miscellaneous": 30.32})
+
+def main():
+    print()
+
+if __name__ == '__main__':
+    main()
