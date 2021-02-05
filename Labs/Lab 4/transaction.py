@@ -32,8 +32,8 @@ class Transaction:
         """
         return self._transaction_location
 
-    def __str__(self):
-        return f"There are currently {self}"
+    # def __str__(self):
+    #     return f"There are currently {self.tra}"
 
     def __repr__(self):
         return f"Transaction(transaction_time: {self._transaction_time}, " \
