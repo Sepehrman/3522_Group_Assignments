@@ -5,11 +5,6 @@ import time
 from transaction import Transaction
 from user import User
 
-
-def prompt_user_for_transaction_amount():
-    print("Please Enter the transaction amount: ")
-
-
 class TransactionMenu:
 
     def __init__(self):
@@ -21,10 +16,14 @@ class TransactionMenu:
             print("*** There are currently no transactions available to display ***")
         else:
             for transaction in self._transaction_menu:
-                print(transaction)
+                print(str(transaction))
 
     def __str__(self):
         return f"There are currently {len(self._transaction_menu)} transactions recorded."
+
+    @staticmethod
+    def prompt_user_for_transaction_amount():
+        print("Please Enter the transaction amount: ")
 
     @staticmethod
     def prompt_user_the_menu():
@@ -49,10 +48,6 @@ class TransactionMenu:
         print("Please Enter the location of the transaction: ")
 
     @staticmethod
-    def print_user_info():
-        return
-
-    @staticmethod
     def print_given_options():
         print("Please choose one of the given options bellow (Press \"0\" to quit the program)\n"
               "1. Display all available transactions.\n"
@@ -63,7 +58,7 @@ class TransactionMenu:
         self._transaction_menu.append(transaction_record)
 
     def record_transaction_info(self):
-        transaction_amount = float(input(prompt_user_for_transaction_amount()))
+        transaction_amount = float(input(TransactionMenu.prompt_user_for_transaction_amount()))
         transaction_location = str(input(TransactionMenu.prompt_user_for_transaction_location()))
 
         transaction_day = int(input(TransactionMenu.prompt_user_for_transaction_day()))
@@ -74,10 +69,6 @@ class TransactionMenu:
 
         self.add_new_transaction_record(transaction_obj)
 
-    # @property
-    # def user_details(self):
-    #     return self._user_details
-
 
 def main():
 
@@ -87,7 +78,7 @@ def main():
     user_input = ''
     print("Loading", end='')
     for seconds in range(1, 4):
-        # time.sleep(1)
+        time.sleep(0.5)
         print(".", end='')
     print()
 
@@ -97,11 +88,14 @@ def main():
         if user_input == 1:
             transaction_list.list_all_available_transactions()
         elif user_input == 2:
-            print('User details')
+            print(str(user_object))
         elif user_input == 3:
             transaction_list.record_transaction_info()
-        input("Press Enter to continue\n")
+        else:
+            input("Press Enter to continue\n")
 
     print("Farewell!")
+
+
 if __name__ == '__main__':
     main()
