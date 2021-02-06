@@ -8,10 +8,15 @@ from user import User
 class TransactionMenu:
 
     def __init__(self):
+        """
+        An initializer for TransactionMenu
+        """
         self._transaction_menu = []
-        # self.user = super().__init__(user_name, user_age, account_number, bank_name, balance, budget)
 
     def list_all_available_transactions(self):
+        """
+        Displays all available transactions
+        """
         if len(self._transaction_menu) == 0:
             print("*** There are currently no transactions available to display ***\n")
         else:
@@ -19,6 +24,9 @@ class TransactionMenu:
                 print(str(transaction))
 
     def __str__(self):
+        """
+        :return: A real life representation of the transaction menu
+        """
         return f"There are currently {len(self._transaction_menu)} transactions recorded."
 
     def __repr__(self):
@@ -29,12 +37,20 @@ class TransactionMenu:
 
     @staticmethod
     def print_given_options():
-        print("Please choose one of the given options bellow (Press \"0\" to quit the program)\n"
+        """
+        Prints all available options to choose from
+        """
+        print("---- Program Initiated ----\n"
+              "Please choose one of the given options bellow (Press \"0\" to quit the program)\n"
               "1. Display all available transactions.\n"
               "2. Print User Information.\n"
               "3. Record a new Transaction.")
 
     def add_new_transaction_record(self, transaction_record):
+        """
+        Adds a new transaction object to the current transaction records
+        :param transaction_record: an Object
+        """
         self._transaction_menu.append(transaction_record)
 
     def record_transaction_info(self):
@@ -71,7 +87,6 @@ def main():
 
     user_object = User.load_test_user()
     transaction_list = TransactionMenu()
-    TransactionMenu.prompt_user_the_menu()
     user_input = ''
     print("Loading", end='')
     for seconds in range(1, 4):
@@ -89,7 +104,7 @@ def main():
         elif user_input == 3:
             transaction_list.record_transaction_info()
         else:
-            input("Press Enter to continue\n")
+            print("Please enter a number from the given coordinates")
 
     print("Farewell!")
 

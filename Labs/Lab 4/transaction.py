@@ -39,8 +39,15 @@ class Transaction:
         """
         return self._transaction_budget
 
-    # def __str__(self):
-    #     return f"There are currently {self.tra}"
+    def __str__(self):
+        """
+        :return: a real life representation of the Transaction details
+        """
+        return f"Transaction details:\n" \
+               f"Store/Website name: {self._transaction_location}\n" \
+               f"Transaction amount: ${self._transaction_amount}\n" \
+               f"Budget category: {self._transaction_budget}\n"\
+               f"Transaction Time: {self._transaction_time}\n"
 
     def __repr__(self):
         """
