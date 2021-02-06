@@ -3,7 +3,7 @@ class Transaction:
     A class representing a Transaction Record
     """
 
-    def __init__(self, transaction_time, transaction_amount, transaction_location):
+    def __init__(self, transaction_time, transaction_amount, transaction_location, transaction_budget):
         """
         Initializer for the Transaction class
         :param transaction_time: a datetime module
@@ -13,6 +13,7 @@ class Transaction:
         self._transaction_time = transaction_time
         self._transaction_amount = transaction_amount
         self._transaction_location = transaction_location
+        self._transaction_budget = transaction_budget
 
     def get_transaction_time(self):
         """
@@ -32,10 +33,21 @@ class Transaction:
         """
         return self._transaction_location
 
+    def get_transaction_budget(self):
+        """
+        :return: a transaction budget
+        """
+        return self._transaction_budget
+
     # def __str__(self):
     #     return f"There are currently {self.tra}"
 
     def __repr__(self):
-        return f"Transaction(transaction_time: {self._transaction_time}, " \
-               f" transaction_amount: {self._transaction_amount}," \
-               f" transaction_location: {self._transaction_location})"
+        """
+        :return: A String representation of Transaction
+        """
+        return f"Transaction details:\n" \
+               f"Store/Website name: {self._transaction_location}\n" \
+               f"Transaction amount: ${self._transaction_amount}\n" \
+               f"Budget category: {self._transaction_budget}\n"\
+               f"Transaction Time: {self._transaction_time}\n"

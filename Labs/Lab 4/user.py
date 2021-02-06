@@ -1,7 +1,15 @@
 class User:
 
-    def __init__(self, user_name, user_age, account_number,
-                 bank_name, balance, budget):
+    def __init__(self, user_name, user_age, account_number, bank_name, balance, budget):
+        """
+        An initializer for the User Class
+        :param user_name: a String
+        :param user_age: an Integer
+        :param account_number: a String
+        :param bank_name: a String
+        :param balance: a float
+        :param budget: a dictionary
+        """
         self._user_name = user_name
         self._user_age = user_age
         self._account_number = account_number
