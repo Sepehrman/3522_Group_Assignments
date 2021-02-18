@@ -2,14 +2,37 @@ from user import User
 from budget_category import BudgetCategory, CategoryName
 from user_types import Angel, Rebel, TroubleMaker
 
-class UserMenu:
 
+class UserMenu:
     def __init__(self):
         self._users = []
         self._current_user = User
 
+    def add_user(self):
+        print("Please enter your child's information")
+        try:
+            user_name = str(input("Enter the name for your child: "))
+            user_age = int(input("Enter the age of your child: "))
+            user_account_number = int(input("Enter the account number of your child: "))
+            user_bank_name = str(input("What is the name of your child's bank: "))
+            user_balance = float(input("What balance is allocated to your child's bank: "))
+            user_budgets = float(input("What are your child's budgets: "))
+            self._users.append(User(user_name, user_age, user_account_number
+                                    , user_bank_name, user_balance, user_budgets))
+        except TypeError:
+            print("The information you've provided is not of the correct format")
+        finally:
+            print("Process completed")
+
+    @staticmethod
+    def print_given_options():
+        print("1. View Budgets\n"
+              "2. Record a Transaction\n"
+              "3. View Transaction by Budget\n"
+              "4. View Bank Account Details\n")
+
     def view_budget(self):
-        return
+        pass
 
     def record_selftransaction(self):
         pass
@@ -20,16 +43,12 @@ class UserMenu:
     def view_bank_account_details(self):
         pass
 
-def main():
 
-    user_input = input("Would you like to use a default user?")
-    if  user_input == "Y":
-        user_object = User.load_test_user()
-    else:
-        user_name = input("Enter the name for your user\n")
-        user_age = input("Enter the age of your user\n")
-        user_type = input("What is the user type")
-        bank_details = input("")
+def main():
+    print("------- Welcome to F.A.M -------")
+
+    user_menu = UserMenu()
+    user_menu.add_user()
 
     # transaction_list = TransactionMenu()
     # user_input = ''
