@@ -1,13 +1,18 @@
+from user import User
+
+
+def view_budget():
+    return "---- Budgets ----\n" \
+           "Amount Left: " \
+           "Amount Spent: " \
+           "Amount Allocated to Budget: "
+
+
 class UserMenu:
 
-    def __init__(self, budgets):
-        self._budgets = budgets
-
-    def view_budget(self):
-        return "---- Budgets ----\n" \
-               "Amount Left: " \
-               "Amount Spent: " \
-               "Amount Allocated to Budget: "
+    def __init__(self):
+        self._users = []
+        self._current_user = User
 
     def record_transaction(self):
         pass
