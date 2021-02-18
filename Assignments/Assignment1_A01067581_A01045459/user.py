@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from budget_category import Budget
+# from budget_category import Budget
 from bank import Bank
 
 class User:
@@ -34,6 +34,9 @@ class User:
         return User("Bruce Wayne", 10, "12345678", "Gotham Bank", 98.32,
                     {"Games and Entertainment": 30, "Clothing and Accessories": 20, "Eating Out": 18,
                      "Miscellaneous": 30.32})
+
+    def get_budget(self):
+        return self._budget
 
     @abstractmethod
     def get_message_warning(self):

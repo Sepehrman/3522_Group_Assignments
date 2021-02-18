@@ -41,11 +41,11 @@ class BudgetCategory:
         return self._transactions
 
     def __repr__(self):
-       return f"Category: {self.get_category_name}"
-              f"\n Locked: {self._is_locked}"
-              f"\n Amount spent: {self._current_spent}"
-              f"\n Amount left: {self._budget_count}"
-              f"\n Total Amount: {self._budget_limit}"
+        return f"Category: {self.get_category_name}" \
+              f"\n Locked: {self._is_locked}" \
+              f"\n Amount spent: {self._current_spent}" \
+              f"\n Amount left: {self._budget_count}" \
+              f"\n Total Amount: {self._budget_limit}" \
 
     def is_overlimit(self):
         return self._current_spent > self._budget_limit

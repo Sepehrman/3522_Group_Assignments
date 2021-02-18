@@ -1,4 +1,5 @@
-class Transaction:
+from user import User
+class Transaction(User):
     """
     A class representing a Transaction Record
     """
@@ -14,6 +15,7 @@ class Transaction:
         self._transaction_amount = transaction_amount
         self._transaction_location = transaction_location
         self._transaction_budget = transaction_budget
+        super(Transaction, self).__init__()
 
     def get_transaction_time(self):
         """
