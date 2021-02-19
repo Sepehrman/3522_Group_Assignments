@@ -1,7 +1,6 @@
 class Bank:
 
-    def __init__(self, user_name, user_age, account_number, bank_name, balance, budget, user_type):
-        super().__init__(user_name, user_age, budget, user_type)
+    def __init__(self, account_number, bank_name, balance):
         self._account_number = account_number
         self._bank_name = bank_name
         self._balance = balance

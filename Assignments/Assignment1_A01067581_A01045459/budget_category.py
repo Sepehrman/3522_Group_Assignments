@@ -42,17 +42,21 @@ class BudgetCategory:
 
     def print_results(self):
         print(f"Category: {self._category_name}"
-        f"\n    Locked: {self._is_locked}"
-        f"\n    Total Amount: {self._budget_limit}"
-        f"\n    Amount spent: {self._current_spent}"
-        f"\n    Amount left: {self._budget_count}")
+              f"\n Total Amount: {self._budget_limit}"
+              f"\n Amount spent: {self._current_spent}"
+              f"\n Amount left: {self._budget_count}"
+              f"\n Locked: {self._is_locked}" 
+              f"\n Transactions: \n"
+              f"\n {self._transactions}\n")
 
     def __repr__(self):
-        return f"Category: {self._category_name}"
-        f"\n Locked: {self._is_locked}"
-        f"\n Amount spent: {self._current_spent}"
-        f"\n Amount left: {self._budget_count}"
-        f"\n Total Amount: {self._budget_limit}"
+        return f"Category: {self._category_name}" \
+               f"\n Total Amount: {self._budget_limit}" \
+               f"\n Amount spent: {self._current_spent}" \
+               f"\n Amount left: {self._budget_count}" \
+               f"\n Locked: {self._is_locked}" \
+               f"\n Transactions: \n" \
+               f"\n {self._transactions}\n"
 
     def is_overlimit(self):
         return self._current_spent > self._budget_limit
