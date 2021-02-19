@@ -7,7 +7,8 @@ class User:
     A class representing a User of F.A.M
     """
 
-    def __init__(self, user_name, user_age, account_number, bank_name, balance, budget, user_type):
+    def __init__(self, user_name: str, user_age: int, account_number: str, bank_name: str,
+                 balance: float, budget: dict, user_type: str): #change user_type to enumerate
         """
         An initializer for the User Class
         :param user_name: a String

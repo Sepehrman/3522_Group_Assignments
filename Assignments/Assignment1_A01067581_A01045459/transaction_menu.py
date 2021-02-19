@@ -23,6 +23,7 @@ class TransactionMenu:
             for transaction in self._transaction_menu:
                 print(str(transaction))
 
+
     def __str__(self):
         """
         :return: A real life representation of the transaction menu
@@ -84,7 +85,6 @@ class TransactionMenu:
 
 
 def main():
-
     user_object = User.load_test_user()
     transaction_list = TransactionMenu()
     user_input = ''
