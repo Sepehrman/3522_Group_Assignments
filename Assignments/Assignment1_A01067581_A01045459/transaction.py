@@ -14,8 +14,7 @@ class Transaction(User):
         self._transaction_time = transaction_time
         self._transaction_amount = transaction_amount
         self._transaction_location = transaction_location
-        # self._transaction_budget = transaction_budget
-        # super(Transaction, self).__init__()
+        self._transaction_budget = transaction_budget
 
     def get_transaction_time(self):
         """

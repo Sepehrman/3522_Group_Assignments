@@ -24,12 +24,26 @@ class UserMenu:
         finally:
             print("Process completed")
 
-    @staticmethod
-    def print_given_options():
-        print("1. View Budgets\n"
-              "2. Record a Transaction\n"
-              "3. View Transaction by Budget\n"
-              "4. View Bank Account Details\n")
+    def set_budgets(self):
+        budget_names = [CategoryName.GAMES.value, CategoryName.CLOTHING.value, CategoryName.DINE.value,
+                        CategoryName.MISC.value]
+        budget_categories = {0: None, 1: None, 2: None, 3: None}
+
+        for i in range(0, 4):
+            print(f"\nThis is for budget {budget_names[i]:}")
+            budget_limit = float(input("What is your budget limit? "))
+            current_spent = float(input("How much was currently spent?"))
+            budget_categories[i] = BudgetCategory(budget_names[i], budget_limit, False, current_spent, [])
+
+        return budget_categories
+
+    def print_menu(self):
+        choice = int(input("1. View Budgets\n"
+                           "2. Record a Transaction\n"
+                           "3. View Transaction by Budget\n"
+                           "4. View Bank Account Details\n"
+                           "0. Quit Program\n"))
+        return choice
 
     def view_budget(self):
         pass
@@ -46,7 +60,6 @@ class UserMenu:
 
 def main():
     print("------- Welcome to F.A.M -------")
-
     user_menu = UserMenu()
     user_menu.add_user()
 
