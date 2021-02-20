@@ -1,7 +1,7 @@
 # from user import User
 # from abc import ABC
 #
-# 
+#
 # class Angel(User):
 #     def __init__(self, user_name, user_age, account_number, bank_name, balance, budget):
 #         super().__init__(user_name, user_age, account_number, bank_name, balance, budget)

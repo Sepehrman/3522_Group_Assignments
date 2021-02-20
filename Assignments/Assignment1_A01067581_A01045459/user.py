@@ -1,6 +1,8 @@
 from abc import abstractmethod
 from budget_category import BudgetCategory, CategoryName
 from bank import Bank
+from transaction import Transaction
+from datetime import datetime
 
 
 class User:
@@ -28,12 +30,19 @@ class User:
         Loads test user 1 into the program
         :return: a test User object
         """
-        budget_games = BudgetCategory(CategoryName.GAMES.value, 40, False, 20, [])
-        budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 70, False, 50, [])
-        budget_dine = BudgetCategory(CategoryName.DINE.value, 50, False, 20, [])
-        budget_miscellaneous = BudgetCategory(CategoryName.MISC.value, 70, False, 15, [])
-        user_type = "Angel"
+        transaction_list_game = Transaction(datetime(2020, 12, 11, 19, 55), 300, "Gotham Bank",
+                                            CategoryName.GAMES.value)
+        transaction_list_clothes = Transaction(datetime(2020, 12, 11, 19, 55), 300, "Towers",
+                                               CategoryName.CLOTHING.value)
+        transaction_list_dine = Transaction(datetime(2020, 12, 11, 19, 55), 320, "Paul's", CategoryName.DINE.value)
+        transaction_list_misc = Transaction(datetime(2020, 12, 11, 19, 55), 100, "Gotham Asylum",
+                                            CategoryName.MISC.value)
 
+        budget_games = BudgetCategory(CategoryName.GAMES.value, 40, False, 20, [transaction_list_game])
+        budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 70, False, 50, [transaction_list_clothes])
+        budget_dine = BudgetCategory(CategoryName.DINE.value, 50, False, 20, [transaction_list_dine])
+        budget_miscellaneous = BudgetCategory(CategoryName.MISC.value, 70, False, 15, [transaction_list_misc])
+        user_type = "Angel"
         bank_info = Bank("12345678", "Gotham Bank", 40000)
 
         return User("Bruce Wayne", 40, bank_info,
