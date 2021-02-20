@@ -13,3 +13,8 @@ class Bank:
 
     def get_account_number(self):
         return self._account_number
+
+    def __repr__(self):
+        return f"Bank Name: {self._bank_name}" \
+               f"\n Total Amount: {self._account_number}" \
+               f"\n Amount spent: {self._balance}"

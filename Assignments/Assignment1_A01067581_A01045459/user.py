@@ -1,14 +1,15 @@
 from abc import ABC, abstractmethod
-# from budget_category import Budget
+from budget_category import BudgetCategory, CategoryName
+# from user_types import Angel
 from bank import Bank
+
 
 class User:
     """
     A class representing a User of F.A.M
     """
 
-    def __init__(self, user_name: str, user_age: int, account_number: str, bank_name: str,
-                 balance: float, budget: dict, user_type: str): #change user_type to enumerate
+    def __init__(self, user_name: str, user_age: int, bank: object, budget: dict, user_type: str):  # change user_type to enumerate
         """
         An initializer for the User Class
         :param user_name: a String
@@ -19,11 +20,9 @@ class User:
         :param budget: a dictionary
         :param user_type: an enum
         """
+        self._bank_details = bank
         self._user_name = user_name
         self._user_age = user_age
-        self._account_number = account_number
-        self._bank_name = bank_name
-        self._balance = balance
         self._budget = budget
         self._user_type = user_type
 
@@ -32,9 +31,19 @@ class User:
         """
         :return: a test User object
         """
-        return User("Bruce Wayne", 10, "12345678", "Gotham Bank", 98.32,
-                    {"Games and Entertainment": 30, "Clothing and Accessories": 20, "Eating Out": 18,
-                     "Miscellaneous": 30.32})
+        budget_games = BudgetCategory(CategoryName.GAMES.value, 40, False, 20, [])
+        budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 70, False, 15, [])
+        budget_dine = BudgetCategory(CategoryName.DINE.value, 80, False, 20, [])
+        budget_miscellaneous = BudgetCategory(CategoryName.MISC.value, 70, False, 15, [])
+        user_type = "ANGEL"
+
+        bank_info = Bank("12345678", "Gotham Bank", 1000)
+
+        return User("Bruce Wayne", 20, bank_info,
+                    {0: budget_games, 1: budget_clothing, 2: budget_dine, 3: budget_miscellaneous}, user_type)
+
+    def get_bank(self):
+        return self._bank_details
 
     def get_budget(self):
         return self._budget

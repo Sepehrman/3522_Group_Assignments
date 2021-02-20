@@ -1,5 +1,6 @@
 from user import User
 from datetime import datetime
+from budget_category import CategoryName
 
 
 class Transaction:
@@ -8,7 +9,7 @@ class Transaction:
     """
 
     def __init__(self, transaction_timestamp: datetime, transaction_amount: float,
-                 transaction_location: str, transaction_budget: dict):
+                 transaction_location: str, transaction_budget: str):
         """
         Initializer for the Transaction class
         :param transaction_time: a datetime module
