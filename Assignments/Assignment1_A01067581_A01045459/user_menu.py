@@ -5,11 +5,14 @@ from budget_category import BudgetCategory, CategoryName
 from datetime import datetime
 from bank import Bank
 
+
 class UserMenu:
+
+    user_count = 0
 
     def __init__(self):
         self._users = []
-        # self._current_user = self._users[0]
+        self._current_user = self._users
 
     def register_user(self):
         print("Please enter your child's information")
@@ -19,6 +22,9 @@ class UserMenu:
         user_budgets = self.set_budgets()
         user_type = "ANGEL"
         self._users.append(User(user_name, user_age, user_bank, user_budgets, user_type))
+
+    def increment_user_count(self):
+        self.user_count += 1
 
     @staticmethod
     def set_budgets():
@@ -33,13 +39,31 @@ class UserMenu:
             budget_categories[i] = BudgetCategory(budget_names[i], budget_limit, False, current_spent, [])
         return budget_categories
 
-    @staticmethod
-    def options_menu():
-        choice = int(input("1. View Budgets\n"
-                           "2. Record a Transaction\n"
-                           "3. View Transaction by Budget\n"
-                           "4. View Bank Account Details\n"
-                           "0. Quit Program\n"))
+    def options_menu(self, given_user):
+        while True:
+            print("Please choose from the following options")
+            try:
+                choice = int(input("1. View Budgets\n"
+                                   "2. Record a Transaction\n"
+                                   "3. View Transaction by Budget\n"
+                                   "4. View Bank Account Details\n"
+                                   "5. Go to Previous Menu\n"))
+            except TypeError:
+                print("Value should be of type integer")
+            else:
+                if choice == 1:
+                    self.view_budget(given_user)
+                elif choice == 2:
+                    self.record_transaction(given_user)
+                elif choice == 3:
+                    self.view_transaction_budget(given_user)
+                elif choice == 4:
+                    self.view_bank_account_details(given_user)
+                elif choice == 5:
+                    print("--- Moving to previous menu ---")
+                    break
+                else:
+                    print("Please choose an option within the given range of numbers")
         return choice
 
     def add_new_user(self, new_user):
@@ -97,37 +121,57 @@ class UserMenu:
 
     def view_transaction_budget(self, user_obj):
         category_choice = self.budgets_menu()
-        print(user_obj._budget[category_choice]._transaction)
+        print(user_obj._budget[category_choice]._transactions)
 
-    # def view_bank_account_details(self, user):
-    #     print(user._bank_details)
+    @staticmethod
+    def print_all_budgets_transactions(user):
+        for i in range(0, 4):
+            print(f" - {user._budget[i]._category_name}")
+            print(f"   {user._budget[i]._transactions}\n")
+
+    def view_bank_account_details(self, user_obj):
+        print("Bank details of the user are:")
+        print(user_obj._bank_details)
+        print("All transactions to date are:")
+        self.print_all_budgets_transactions(user_obj)
+
+    def start_program(self):
+        print("------- Welcome to F.A.M -------\n")
+
+        while True:
+            print("1. Register a new User\n"
+                  "2. Load existing users\n"
+                  "3. Quit the program\n")
+            try:
+                user_input = int(input("Please choose between the given options: "))
+            except ValueError:
+                print("Enter the correct input type!")
+            else:
+                if user_input == 1:
+                    self.register_user()
+                elif user_input == 2:
+                    self.add_new_user(User.load_test_user())
+                    self.add_new_user(User.load_test_user_2())
+                    self.add_new_user(User.load_test_user_3())
+                    this_user = self.choose_a_user()
+                    self.options_menu(this_user)
+                elif user_input == 3:
+                    print("Thank you for choosing F.A.M, we hope to see you soon!")
+                    break
+
+    def choose_a_user(self):
+        print("Please choose a current user from the following users")
+        for user in self._users:
+            self.increment_user_count()
+            print(f"{self.user_count}. {user._user_name}")
+        user = int(input())
+        self._current_user = self._users[user-1]
+        return self._current_user
 
 
 def main():
-    print("------- Welcome to F.A.M -------\n")
     user_menu = UserMenu()
-    new_user = User.load_test_user()
-    user_menu.add_new_user(new_user)
-    # user_menu.register_user()
-    # user_menu.
-    user_input = ''
-
-    while user_input != 0:
-        user_input = user_menu.options_menu()
-        if user_input == 1:
-            # add back to method user_menu._users[0]
-            user_menu.view_budget(user_menu._users[0])
-        elif user_input == 2:
-            user_menu.record_transaction(user_menu._users[0])
-        elif user_input == 3:
-            user_menu.view_transaction_budget(user_menu._users[0])
-        elif user_input == 4:
-            user_menu.view_bank_account_details(user_menu._users[0])
-        else:
-            print("Number should be in range 1-4")
-
-    print("Farewell!")
-
+    user_menu.start_program()
 
 if __name__ == '__main__':
     main()

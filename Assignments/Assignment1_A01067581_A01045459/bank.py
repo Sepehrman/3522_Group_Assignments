@@ -16,5 +16,5 @@ class Bank:
 
     def __repr__(self):
         return f"Bank Name: {self._bank_name}" \
-               f"\n Total Amount: {self._account_number}" \
-               f"\n Amount spent: {self._balance}"
+               f"\n Account Number: {self._account_number}" \
+               f"\n Total Balance: {self._balance}\n"
