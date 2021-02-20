@@ -1,6 +1,5 @@
 from abc import abstractmethod
 from budget_category import BudgetCategory, CategoryName
-# from user_types import Angel, TroubleMaker, Rebel
 from bank import Bank
 
 
@@ -24,64 +23,73 @@ class User:
         self._user_type = user_type
 
     @staticmethod
-    def load_test_user():
+    def load_test_user_1():
         """
+        Loads test user 1 into the program
         :return: a test User object
         """
         budget_games = BudgetCategory(CategoryName.GAMES.value, 40, False, 20, [])
-        budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 70, False, 15, [])
-        budget_dine = BudgetCategory(CategoryName.DINE.value, 80, False, 20, [])
+        budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 70, False, 50, [])
+        budget_dine = BudgetCategory(CategoryName.DINE.value, 50, False, 20, [])
         budget_miscellaneous = BudgetCategory(CategoryName.MISC.value, 70, False, 15, [])
-        # user_type =
         user_type = "Angel"
 
-        bank_info = Bank("12345678", "Gotham Bank", 1000)
+        bank_info = Bank("12345678", "Gotham Bank", 40000)
 
-        return User("Bruce Wayne", 20, bank_info,
+        return User("Bruce Wayne", 40, bank_info,
                     {0: budget_games, 1: budget_clothing, 2: budget_dine, 3: budget_miscellaneous}, user_type)
 
     @staticmethod
     def load_test_user_2():
         """
+        Loads test user 2 into the program
         :return: a test User object
         """
         budget_games = BudgetCategory(CategoryName.GAMES.value, 50, False, 20, [])
         budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 70, False, 15, [])
         budget_dine = BudgetCategory(CategoryName.DINE.value, 80, False, 20, [])
         budget_miscellaneous = BudgetCategory(CategoryName.MISC.value, 70, False, 15, [])
-        # user_type =
-        user_type = "Angel"
+        user_type = "Rebel"
 
-        bank_info = Bank("12345678", "Gotham Bank", 1000)
+        bank_info = Bank("00994421", "BMO", 2000)
 
-        return User("Sepehr Mansouri", 20, bank_info,
+        return User("Sepehr Mansouri", 22, bank_info,
                     {0: budget_games, 1: budget_clothing, 2: budget_dine, 3: budget_miscellaneous}, user_type)
 
     @staticmethod
     def load_test_user_3():
         """
+        Loads test user 3 into the program
         :return: a test User object
         """
-        budget_games = BudgetCategory(CategoryName.GAMES.value, 40, False, 20, [])
-        budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 70, False, 15, [])
-        budget_dine = BudgetCategory(CategoryName.DINE.value, 80, False, 20, [])
-        budget_miscellaneous = BudgetCategory(CategoryName.MISC.value, 70, False, 15, [])
-        # user_type =
-        user_type = "Angel"
+        budget_games = BudgetCategory(CategoryName.GAMES.value, 80, False, 20, [])
+        budget_clothing = BudgetCategory(CategoryName.CLOTHING.value, 30, False, 15, [])
+        budget_dine = BudgetCategory(CategoryName.DINE.value, 100, False, 90, [])
+        budget_miscellaneous = BudgetCategory(CategoryName.MISC.value, 50, False, 15, [])
+        user_type = "Troublemaker"
 
-        bank_info = Bank("12345678", "Gotham Bank", 1000)
+        bank_info = Bank("0987654", "RBC", 2000)
 
         return User("Sam Merati", 20, bank_info,
                     {0: budget_games, 1: budget_clothing, 2: budget_dine, 3: budget_miscellaneous}, user_type)
 
     def get_bank(self):
+        """
+        :return: Bank details
+        """
         return self._bank_details
 
     def get_budget(self):
+        """
+        :return: Budget details
+        """
         return self._budget
 
     @abstractmethod
     def get_message_warning(self):
+        """
+        :return: User type warning
+        """
         pass
 
     def __repr__(self):

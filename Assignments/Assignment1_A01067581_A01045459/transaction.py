@@ -1,6 +1,4 @@
-from user import User
 from datetime import datetime
-from budget_category import CategoryName
 
 
 class Transaction:
