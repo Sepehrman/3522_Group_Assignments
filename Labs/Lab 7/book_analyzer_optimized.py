@@ -17,6 +17,7 @@ class BookAnalyzer:
 
     def __init__(self):
         self.text = None
+        self.word_list = {}
 
     def read_data(self, src="House of Usher.txt"):
         """
@@ -25,24 +26,16 @@ class BookAnalyzer:
         common punctuation is removed.
         :param src: the name of the file, a string
         """
-        # read lines
         with open(src, mode='r', encoding='utf-8') as book_file:
             self.text = book_file.readlines()
+        self.text = [line.lower() for line in self.text if line != "\n"]
 
-        #strip out empty lines
-        stripped_text = []
-        for line in self.text:
-            if line != "\n":
-                stripped_text.append(line)
-        self.text = stripped_text
 
-        # convert list of lines to list of words
         words = []
         for line in self.text:
             words += line.split()
         self.text = words
 
-        # remove common punctuation from words
         temp_text = []
         for word in self.text:
             temp_word = word
@@ -61,7 +54,7 @@ class BookAnalyzer:
         :return: True if not found, false otherwise
         """
         for a_word in word_list:
-            if word.lower() == a_word.lower():
+            if word == a_word:
                 return False
         return True
 
@@ -71,24 +64,25 @@ class BookAnalyzer:
         :return: a list of all the unique words.
         """
         temp_text = self.text
-        unique_words = []
+        # unique_words = []
         while temp_text:
-            word = temp_text.pop()
-            if self.is_unique(word, temp_text):
-                unique_words.append(word)
-        return unique_words
+            word = temp_text.pop().lower()
+            self.word_list[word] = 1
+        return self.word_list
 
 
 def main():
     book_analyzer = BookAnalyzer()
     book_analyzer.read_data()
     unique_words = book_analyzer.find_unique_words()
-    print("-"*50)
+
+    print("-" * 50)
     print(f"List of unique words (Count: {len(unique_words)})")
-    print("-"*50)
+    print("-" * 50)
+
     for word in unique_words:
         print(word)
-    print("-"*50)
+    print("-" * 50)
 
 
 if __name__ == '__main__':
