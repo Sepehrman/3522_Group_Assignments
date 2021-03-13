@@ -1,7 +1,8 @@
 """
-This module is responsible for holding a badly written (but not so bad
-that you won't find this in the workplace) BookAnalyzer class that needs
-to be profiled and optimized.
+This module is responsible the optimized BookAnalyzer class.
+
+Sam Merati A01045459
+Sepehr Mansouri A01067581
 """
 
 
