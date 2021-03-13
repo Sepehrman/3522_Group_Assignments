@@ -5,14 +5,12 @@ to be profiled and optimized.
 """
 
 
-class BookAnalyzer:
+class BookAnalyzerOptimized:
     """
     This class provides the ability to load the words in a text file in
     memory and provide the ability to filter out the words that appear
     only once.
     """
-
-    # a constant to help filter out common punctuation.
     COMMON_PUNCTUATION = [",", "*", ";", ".", ":", "(", "[", "]", ")"]
 
     def __init__(self):
@@ -28,8 +26,7 @@ class BookAnalyzer:
         """
         with open(src, mode='r', encoding='utf-8') as book_file:
             self.text = book_file.readlines()
-        self.text = [line.lower() for line in self.text if line != "\n"]
-
+        self.text = (line.lower() for line in self.text if line != "\n")
 
         words = []
         for line in self.text:
@@ -53,15 +50,14 @@ class BookAnalyzer:
         return self.word_list
 
 
-
 def main():
-    book_analyzer = BookAnalyzer()
+    book_analyzer = BookAnalyzerOptimized()
     book_analyzer.read_data()
     unique_words = book_analyzer.find_unique_words()
 
-    print("-" * 50)
+    # print("-" * 50)
     print(f"List of unique words (Count: {len(unique_words)})")
-    print("-" * 50)
+    # print("-" * 50)
 
     for word in unique_words:
         print(word)

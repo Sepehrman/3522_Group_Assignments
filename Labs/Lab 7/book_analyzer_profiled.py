@@ -5,7 +5,7 @@ to be profiled and optimized.
 """
 
 
-class BookAnalyzer:
+class BookAnalyzerProfiled:
     """
     This class provides the ability to load the words in a text file in
     memory and provide the ability to filter out the words that appear
@@ -27,7 +27,7 @@ class BookAnalyzer:
         """
         with open(src, mode='r', encoding='utf-8') as book_file:
             self.text = book_file.readlines()
-        self.text = [line.lower() for line in self.text if line != "\n"]
+        self.text = [line for line in self.text if line != "\n"]
 
         words = []
         for line in self.text:
@@ -52,7 +52,7 @@ class BookAnalyzer:
         :return: True if not found, false otherwise
         """
         for a_word in word_list:
-            if word == a_word:
+            if word == a_word.lower():
                 return False
         return True
 
@@ -71,7 +71,7 @@ class BookAnalyzer:
 
 
 def main():
-    book_analyzer = BookAnalyzer()
+    book_analyzer = BookAnalyzerProfiled()
     book_analyzer.read_data()
     unique_words = book_analyzer.find_unique_words()
 
