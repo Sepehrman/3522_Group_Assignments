@@ -1,18 +1,17 @@
 """
-This module is responsible for holding a badly written (but not so bad
-that you won't find this in the workplace) BookAnalyzer class that needs
-to be profiled and optimized.
+This module is responsible the optimized BookAnalyzer class.
+
+Sam Merati A01045459
+Sepehr Mansouri A01067581
 """
 
 
-class BookAnalyzer:
+class BookAnalyzerOptimized:
     """
     This class provides the ability to load the words in a text file in
     memory and provide the ability to filter out the words that appear
     only once.
     """
-
-    # a constant to help filter out common punctuation.
     COMMON_PUNCTUATION = [",", "*", ";", ".", ":", "(", "[", "]", ")"]
 
     def __init__(self):
@@ -28,8 +27,7 @@ class BookAnalyzer:
         """
         with open(src, mode='r', encoding='utf-8') as book_file:
             self.text = book_file.readlines()
-        self.text = [line.lower() for line in self.text if line != "\n"]
-
+        self.text = (line.lower() for line in self.text if line != "\n")
 
         words = []
         for line in self.text:
@@ -38,25 +36,8 @@ class BookAnalyzer:
 
         temp_text = []
         for word in self.text:
-            temp_word = word
-            for punctuation in self.COMMON_PUNCTUATION:
-                temp_word = temp_word.replace(punctuation, '')
-            temp_text.append(temp_word)
+            temp_text.append(''.join(list(filter(lambda x: x not in self.COMMON_PUNCTUATION, word))))
         self.text = temp_text
-
-    @staticmethod
-    def is_unique(word, word_list):
-        """
-        Checks to see if the given word appears in the provided sequence.
-        This check is case in-sensitive.
-        :param word: a string
-        :param word_list: a sequence of words
-        :return: True if not found, false otherwise
-        """
-        for a_word in word_list:
-            if word == a_word:
-                return False
-        return True
 
     def find_unique_words(self):
         """
@@ -64,7 +45,6 @@ class BookAnalyzer:
         :return: a list of all the unique words.
         """
         temp_text = self.text
-        # unique_words = []
         while temp_text:
             word = temp_text.pop().lower()
             self.word_list[word] = 1
@@ -72,13 +52,13 @@ class BookAnalyzer:
 
 
 def main():
-    book_analyzer = BookAnalyzer()
+    book_analyzer = BookAnalyzerOptimized()
     book_analyzer.read_data()
     unique_words = book_analyzer.find_unique_words()
 
-    print("-" * 50)
+    # print("-" * 50)
     print(f"List of unique words (Count: {len(unique_words)})")
-    print("-" * 50)
+    # print("-" * 50)
 
     for word in unique_words:
         print(word)
