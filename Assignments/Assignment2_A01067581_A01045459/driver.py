@@ -10,8 +10,7 @@ class UserMenu:
 
     def display_menu(self):
         print("------- Welcome to S&S store -------\n")
-
-        # order = str(input())
+        store = Store()
         while True:
             print("1. Process Web Orders\n"
                   "2. Check Inventory\n"
@@ -29,9 +28,19 @@ class UserMenu:
                     except FileNotFoundError:
                         print("Please double check the filename")
                 elif user_input == 2:
-                    pass
+                    inventory = store.get_inventory()
+                    for item in inventory:
+                        quantity = inventory.get(item)
+                        if quantity >=10:
+                            print(f"{item}: In Stock ({quantity})")
+                        elif quantity < 10 and quantity > 3:
+                            print(f"{item}: Low ({quantity})")
+                        elif quantity < 3 and quantity > 0:
+                            print(f"{item}: Very Low ({quantity})")
+                        else:
+                            print(f"{item}: Out of Stock ({quantity})")
                 elif user_input == 0:
-                    open("transaction_report.txt", "w")
+                    store.daily_transaction_report()
                     break
             except ValueError:
                 print("Enter the correct input type!")
