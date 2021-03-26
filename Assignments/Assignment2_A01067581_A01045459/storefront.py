@@ -5,7 +5,7 @@ from items_factory import ChristmasItemsFactory, HalloweenItemsFactory, EasterIt
 
 class Store:
 
-    def __init__(self, orders):
+    def __init__(self):
         self._orders = []
         self._items = {}
 
