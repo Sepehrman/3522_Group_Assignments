@@ -11,8 +11,13 @@ class Store:
 
     def receive_order(self, order):
         self._orders.append(order)
+        for order in self._orders:
+            # For each order, it's making a key with the product id in the dictionary and
+            # initializing an empty list to load product objects into.
+            self._items[order._product_id] = []
+        self.update_inventory()
 
-    # for every order in the orders list, it checks whether the quantity of the order
+    # For every order in the orders list, it checks whether the quantity of the order
     # is bigger than the length of the list containing the item at the key value of the
     # dictionary being the product id. Else it removes the order quantity from the list.
     def update_inventory(self):
@@ -24,10 +29,6 @@ class Store:
             else:
                 for j in range(order._quantity):
                     self._items[order._product_id].pop()
-
-    # def simulate(self):
-    #     for order in self._orders:
-    #         self._products_dict[item.get_order_number()]
 
     @staticmethod
     def process_web_orders():
