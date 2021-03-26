@@ -1,34 +1,36 @@
+import string
 from enum import Enum
+from random import random
 from abc import abstractmethod, ABC
 
 
-class HolidayEnum(Enum):
-    CHRISTMAS = "Christmas"
-    HALLOWEEN = "Halloween"
-    EASTER = "Easter"
-
-
 class InventoryEnum(Enum):
-    TOY = "Toy"
-    CANDY = "Candy"
-    STUFFED_ANIMAL = "Stuffed Animal"
+    TOYS = 0
+    STUFFED_ANIMALS = 1
+    CANDY = 2
 
 
 class Toys:
-    def __init__(self, name, description, product_id, min_age, has_batteries):
+    def __init__(self, name, description, product_id, min_age, is_battery_operated):
         self._name = name
         self._description = description
         self._min_age = min_age
-        self._has_batteries = has_batteries
+        self._is_battery_operated = is_battery_operated
         self._product_id = product_id
 
+    # def generate_id(self):
+    #     return ''.join(random.choices(string.ascii_letters + string.digits, 4))
 
-class SantasWorkshop(Toys):
 
-    def __init__(self, name, description, product_id, min_age, has_batteries, dimensions, num_rooms, **kwargs):
-        super().__init__(name, description, product_id, min_age, has_batteries)
-        self._dimensions = dimensions
-        self._num_rooms = num_rooms
+class SatnasWorkshop(Toys):
+
+    def __init__(self):
+        ########## IF NO AGE MENTIONED, THEN NONE????? ############
+        super().__init__("Santa's Workshop", "The premium Christmas present, this is not a battery operated toy. "
+                                             "The doll house comes in different varieties.", "A0123", None, False)
+        # self._width = width
+        # self._height = height
+        # self._num_rooms = num_rooms
 
 
 class SpiderTypes(Enum):
@@ -37,13 +39,13 @@ class SpiderTypes(Enum):
 
 
 class RemoteControlledSpider(Toys):
-    def __init__(self, name, description, product_id, min_age, has_batteries, speed, jump_height,
-                 has_glow, spider_type):
-        super().__init__(name, description, product_id, min_age, has_batteries)
-        self._speed = speed
-        self._jump_height = jump_height
-        self._has_glow = has_glow
-        self._spider_type = spider_type
+    def __init__(self):
+        super().__init__("Remote Controlled Spider", "The RC Spider is the toy to get during Halloween. "
+                                                     "This toy is battery operated.", "asfa", None, True)
+        # self._speed = speed
+        # self._jump_height = jump_height
+        # self._can_glow = can_glow
+        # self._spider_type = spider_type
 
 
 class RobotBunnyColours(Enum):
@@ -54,10 +56,12 @@ class RobotBunnyColours(Enum):
 
 class RobotBunny(Toys):
 
-    def __init__(self, name, description, product_id, min_age, has_batteries, num_sound, colour):
-        super().__init__(name, description, product_id, min_age, has_batteries)
-        self._num_sound = num_sound
-        self._colour = colour
+    def __init__(self):
+        super().__init__("Robot Bunny", "The Robot Bunny is the toy for toddlers and infants out there. "
+                                        "The toy is battery operated. These come in different varieties as well!"
+                         , "123525sa", 0, True)
+        # self._num_sound_effects = num_sound_effects
+        # self._colour = colour
 
 
 class StuffingType(Enum):
@@ -91,16 +95,21 @@ class StuffedAnimals(ABC):
 
 
 class DancingSkeleton(StuffedAnimals):
-    def __init__(self, name, description, product_id, stuffing_type, size, fabric_type, has_glow):
-        super().__init__(name, description, product_id, stuffing_type, size, fabric_type)
-        self._has_glow = has_glow
+
+    def __init__(self):
+        super().__init__("Dancing Skeleton", "The dancing skeleton is made out of Acrylic yarn and "
+                                             "stuffed with Polyester Fiberfill. "
+                                             "This skeleton is sure to add to your Halloween decorations."
+                         , "A1245", StuffingType.POLYESTER, Sizes.MEDIUM, FabricType.ACRYLIC)
+        # can_glow = True
 
 
 class Reindeer(StuffedAnimals):
-    def __init__(self, name, description, product_id, stuffing_type, size, fabric_type, has_glow):
-        super().__init__(name, description, product_id, stuffing_type, size, fabric_type)
-        # self._has_glow = has_glow
-        self._has_glow = has_glow
+    def __int__(self):
+        super().__init__("Reindeer", "The reindeer comes with its very own personal mini sleigh and is the stuffed"
+                                     " animal for Christmas. It is made out of Cotton and and stuffed with Wool."
+                         , "REIN1264", StuffingType.WOOL, Sizes.SMALL, FabricType.COTTON)
+        # can_glow = True
 
 
 class EasterBunnyColours(Enum):
@@ -112,20 +121,22 @@ class EasterBunnyColours(Enum):
 
 class EasterBunny(StuffedAnimals):
 
-    def __init__(self, name, description, product_id, stuffing_type, size, fabric_type, colour):
-        super().__init__(name, description, product_id, stuffing_type, size, fabric_type)
-        self._colour = colour
+    def __init__(self):
+        super().__init__("Easter Bunny", "AA242", "The Easter Bunny is made out of Linen and"
+                                                  " stuffed with Polyester Fiberfill.",
+                         StuffingType.POLYESTER, Sizes.MEDIUM, FabricType.LINEN)
+        # self._colours = EasterBunnyColours
 
 
 class Candy(ABC):
 
     @abstractmethod
-    def __init__(self, name, description, product_id, has_nuts, has_lactose):
+    def __init__(self, name, description, product_id, contains_nuts, is_lactose_free):
         self._name = name
         self._description = description
         self._product_id = product_id
-        self._has_nuts = has_nuts
-        self._has_lactose = has_lactose
+        self._contains_nuts = contains_nuts
+        self._is_lactose_free = is_lactose_free
 
 
 class CaramelToffeeVariety(Enum):
@@ -139,18 +150,21 @@ class CandyStripes(Enum):
 
 
 class PumpkinCaramelToffee(Candy):
-    def __init__(self, name, description, product_id, has_nuts, has_lactose, variety):
-        super().__init__(name, description, product_id, has_nuts, has_lactose)
-        self._variety = variety
+    def __init__(self):
+        super().__init__("Pumpkin Caramel Toffee", "The Pumpkin Caramel Toffee is Halloween themed and is not lactose "
+                                                   "free and may contain traces of nuts.", "PMPKN123", True, False)
+        # self._variety_type = variety_type
 
 
 class CandyCanes(Candy):
-    def __init__(self, name, description, product_id, has_nuts, has_lactose, colour):
-        super().__init__(name, description, product_id, has_nuts, has_lactose)
-        self._colour = colour
+    def __init__(self):
+        super().__init__("Candy Canes", "Candy Canes are Christmas themed. It is lactose free "
+                                        "and does not contain nuts.", "CANE1234", False, False)
+        # self._stripes = stripes
 
 
 class CremeEggs(Candy):
-    def __init__(self, name, description, product_id, has_nuts, has_lactose, pack_size):
-        super().__init__(name, description, product_id, has_nuts, has_lactose)
-        self._pack_size = pack_size
+    def __init__(self):
+        super().__init__("Creme Eggs", "Creme Eggs are Easter themed and are not lactose free and may "
+                                       "contain traces of nuts.", "CRMEGG125", True, True)
+        # self._eggs_count = eggs_count

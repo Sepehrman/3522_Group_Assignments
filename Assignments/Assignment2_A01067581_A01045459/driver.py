@@ -41,10 +41,6 @@ class UserMenu:
 
 def main():
     user_menu = UserMenu()
-
-    item_factory = OrderProcessor("orders.xlsx")
-
-
     user_menu.display_menu()
 
 

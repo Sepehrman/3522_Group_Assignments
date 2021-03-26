@@ -40,7 +40,6 @@ class OrderProcessor:
     def create_orders(self):
         count = 0
         while count != self.count_rows():
-
             yield Order(**self.get_row(count))
             count += 1
 
@@ -65,6 +64,8 @@ class Order:
     def get_order_number(self):
         return self._order_number
 
+    def get_product_id(self):
+        return self._product_id
 
     @staticmethod
     def find_factory_category(holiday, item):
