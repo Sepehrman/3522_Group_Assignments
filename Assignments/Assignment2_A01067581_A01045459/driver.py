@@ -1,42 +1,54 @@
-from storefront import Store
+from store_front import Store
 from order_processor import OrderProcessor
 
 
 class UserMenu:
-
+    """
+    A User Menu class responsible for simulating a holiday items factory
+    """
     def __init__(self):
         self._store = Store()
         self._inventory = None
         self._web_orders = []
 
     def process_web_orders(self):
+        """
+        Processes all the web orders
+        """
         try:
             filename = str(input("Please enter the file name: "))
             order = OrderProcessor(filename)
             order.load_file()
             orders = order.create_orders()
             for i in range(order.count_rows()):
-                print(next(orders))
                 self._store.receive_order(next(orders))
             print("Orders Processed!")
         except FileNotFoundError:
             print("Please double check the filename")
+        except TypeError:
+            print("Please double check the filename")
 
     def check_inventory(self):
+        """
+        Checks all the inventory items
+        """
         self._inventory = self._store.get_inventory()
         for item in self._inventory:
             quantity = self._inventory.get(item)
             if quantity >= 10:
                 print(f"{item}: In Stock ({quantity})")
-            elif quantity < 10 and quantity > 3:
+            elif 10 > quantity > 3:
                 print(f"{item}: Low ({quantity})")
-            elif quantity < 3 and quantity > 0:
+            elif 3 > quantity > 0:
                 print(f"{item}: Very Low ({quantity})")
             else:
                 print(f"{item}: Out of Stock ({quantity})")
 
     def display_menu(self):
-        print("------- Welcome to S&S store -------\n")
+        """
+        Display the menu and all its options
+        """
+        print("------- Welcome to S&S Holiday store -------\n")
         while True:
             print("1. Process Web Orders\n"
                   "2. Check Inventory\n"
