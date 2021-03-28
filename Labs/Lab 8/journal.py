@@ -7,7 +7,7 @@ class Journal(LibraryItem):
     it's call number.
     """
 
-    def __init__(self, call_num, title, num_copies, names, issue_number, publisher):
+    def __init__(self, issue_number, publisher, **kwargs):
         """
         :param call_num: a string
         :param title: a string
@@ -20,13 +20,11 @@ class Journal(LibraryItem):
         """
         self._issue_number = issue_number
         self._publisher = publisher
-        self._names = names
-        super().__init__(call_num, title, num_copies)
+        super().__init__(**kwargs)
 
     def __str__(self):
         return f"---- Journal: {self.get_title()} ----\n" \
                f"Call Number: {self.call_number}\n" \
                f"Number of Copies: {self._num_copies}\n" \
-               f"Names: {self._names}\n" \
                f"Issue number: {self._issue_number}\n" \
                f"Publisher: {self._publisher}\n"

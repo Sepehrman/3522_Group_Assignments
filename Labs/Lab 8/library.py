@@ -3,7 +3,7 @@ from book import Book
 from catalogue import Catalogue
 from journal import Journal
 from dvd import DVD
-
+from libraryitemgenerator import get_item_type_from_user
 
 class Library:
     """
@@ -79,7 +79,6 @@ class Library:
                 call_number = input("Enter the call number of the item"
                                     " you wish to check out. ")
                 self.check_out(call_number)
-
             elif user_input == 3:
                 call_number = str(input("Enter the call number of the item you wish to return. "))
                 self.return_item(call_number)
@@ -92,10 +91,9 @@ class Library:
                         print(title)
                 else:
                     print("Sorry! We found nothing with that title ")
-
             elif user_input == 5:
-                self._catalogue.add_item()
-
+                factory = get_item_type_from_user()
+                self._catalogue.add_item(factory)
             elif user_input == 6:
                 call_number = input("Enter the call number of the item ")
                 self._catalogue.remove_library_item(call_number)
@@ -122,16 +120,15 @@ def main():
     """
     Creates a library with dummy data and prompts the user for input.
     """
-
     item_list = [
-        Book("J K Rowling", "100.200.300", "Harry Potter 1", 2),
-        Book("J K Rowling", "999.224.854", "Harry Potter 2", 5),
-        Book("J K Rowling", "631.495.302", "Dr. Faustus", 4),
-        Book("Dr. Seuss", "123.02.204", "The Cat in the Hat", 1),
-        Journal("110.234.132", "Life of Bob Dylan", 1, "Alan Jones", 2, "Authentic Publishing"),
-        Journal("102.314.324", "Your Kitchen", 1, "Nancy Jameson", 2, "Home Alone"),
-        DVD("200.100.600", "Spider-Man 4", 2, "28-Dec-2023", 51235),
-        DVD("200.100.200", "Mission Impossible 10", 2, "02-Apr-2025", 81759)
+        Book("J K Rowling", call_number="100.200.300", title="Harry Potter 1", num_copies=2),
+        Book("J K Rowling", call_number="999.224.854", title="Harry Potter 2", num_copies=5),
+        Book("J K Rowling", call_number="631.495.302", title="Dr. Faustus", num_copies=4),
+        Book("Dr. Seuss", call_number="123.02.204", title="The Cat in the Hat", num_copies=1),
+        Journal("Alan Jones", 1, call_number="110.234.132", title="Life of Bob Dylan", num_copies=2),
+        Journal("Your Kitchen", 1, call_number="102.314.324", title="Nancy Jameson", num_copies=2),
+        DVD("28-Dec-2023", 2, call_number="200.100.600", title="Spider-Man 4", num_copies=12),
+        DVD("02-Apr-2025", 5, call_number="200.100.200", title="Mission Impossible 10", num_copies=3)
     ]
 
     my_epic_library = Library(item_list)

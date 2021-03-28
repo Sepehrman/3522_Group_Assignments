@@ -1,7 +1,7 @@
 """ This modules houses the catalogue"""
 import difflib
 from libraryitemgenerator import LibraryItemGenerator
-
+from library_factory import DVDFactory, JournalFactory, BookFactory
 
 class Catalogue:
     """
@@ -31,11 +31,12 @@ class Catalogue:
         results = difflib.get_close_matches(title, title_list, cutoff=0.5)
         return results
 
-    def add_item(self):
+    def add_item(self, factory_class):
         """
         Add a brand new book to the library with a unique call number.
         """
-        new_library_item = LibraryItemGenerator.generate_library_item()
+        new_library_item = factory_class.build_item()
+
         found_library_item = self.retrieve_library_item_by_call_number(new_library_item.call_number)
 
         if found_library_item:
@@ -43,8 +44,6 @@ class Catalogue:
                   f"{new_library_item.call_number}. It already exists. ")
         else:
             self._library_item_list.append(new_library_item)
-            print("item added successfully! item details:")
-            print(new_library_item)
 
     def remove_library_item(self, call_number):
         """

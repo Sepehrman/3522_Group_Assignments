@@ -7,7 +7,7 @@ class Book(LibraryItem):
     it's call number.
     """
 
-    def __init__(self, call_num, title, num_copies, author):
+    def __init__(self, author, **kwargs):
         """
         :param call_num: a string
         :param title: a string
@@ -17,7 +17,7 @@ class Book(LibraryItem):
         :precondition num_copies: a positive integer
         """
         self._author = author
-        super().__init__(call_num, title, num_copies)
+        super().__init__(**kwargs)
 
     def __str__(self):
         return f"---- Book: {self.get_title()} ----\n" \

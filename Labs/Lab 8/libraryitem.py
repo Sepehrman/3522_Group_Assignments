@@ -1,6 +1,7 @@
 """
 module containing the interface for library items
 """
+from abc import abstractmethod
 
 
 class LibraryItem:
@@ -8,8 +9,8 @@ class LibraryItem:
         Represents an item in a library which is identified through
         it's call number.
         """
-
-    def __init__(self, call_num, title, num_copies):
+    @abstractmethod
+    def __init__(self, call_number, title, num_copies):
         """
         :param call_num: a string
         :param title: a string
@@ -17,7 +18,7 @@ class LibraryItem:
         :precondition call_num: a unique identifier
         :precondition num_copies: a positive integer
         """
-        self._call_num = call_num
+        self._call_num = call_number
         self._title = title
         self._num_copies = num_copies
 
