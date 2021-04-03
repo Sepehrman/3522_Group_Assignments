@@ -15,6 +15,9 @@ class InventoryEnum(Enum):
 
 
 class Toys:
+    """
+    A Toy Class, representing a toy
+    """
     def __init__(self, name, description, product_id, min_age, has_batteries):
         self._name = name
         self._description = description
@@ -24,11 +27,14 @@ class Toys:
 
 
 class SantasWorkshop(Toys):
-
-    def __init__(self, name, description, product_id, min_age, has_batteries, dimensions, num_rooms):
+    """
+    A Subclass of type Toy
+    """
+    def __init__(self, name, description, product_id, min_age, has_batteries, dimensions, num_rooms, **kwargs):
         super().__init__(name, description, product_id, min_age, has_batteries)
         self._dimensions = dimensions
         self._num_rooms = num_rooms
+        self._details = kwargs
 
 
 class SpiderTypes(Enum):
@@ -37,13 +43,17 @@ class SpiderTypes(Enum):
 
 
 class RemoteControlledSpider(Toys):
+    """
+    A Subclass of type Toy
+    """
     def __init__(self, name, description, product_id, min_age, has_batteries, speed, jump_height,
-                 has_glow, spider_type):
+                 has_glow, spider_type, **kwargs):
         super().__init__(name, description, product_id, min_age, has_batteries)
         self._speed = speed
         self._jump_height = jump_height
         self._has_glow = has_glow
         self._spider_type = spider_type
+        self._details = kwargs
 
 
 class RobotBunnyColours(Enum):
@@ -53,11 +63,14 @@ class RobotBunnyColours(Enum):
 
 
 class RobotBunny(Toys):
-
-    def __init__(self, name, description, product_id, min_age, has_batteries, num_sound, colour):
+    """
+    A Toy Subclass
+    """
+    def __init__(self, name, description, product_id, min_age, has_batteries, num_sound, colour, **kwargs):
         super().__init__(name, description, product_id, min_age, has_batteries)
         self._num_sound = num_sound
         self._colour = colour
+        self._details = kwargs
 
 
 class StuffingType(Enum):
@@ -79,7 +92,9 @@ class FabricType(Enum):
 
 
 class StuffedAnimals(ABC):
-
+    """
+    A StuffedAnimals Class
+    """
     @abstractmethod
     def __init__(self, name, description, product_id, stuffing_type, size, fabric_type):
         self._name = name
@@ -91,15 +106,22 @@ class StuffedAnimals(ABC):
 
 
 class DancingSkeleton(StuffedAnimals):
+    """
+    A Stuffed animals Subclass
+    """
     def __init__(self, name, description, product_id, stuffing_type, size, fabric_type, has_glow):
         super().__init__(name, description, product_id, stuffing_type, size, fabric_type)
         self._has_glow = has_glow
 
 
 class Reindeer(StuffedAnimals):
-    def __init__(self, name, description, product_id, stuffing_type, size, fabric_type, has_glow):
+    """
+    A Stuffed animals Subclass
+    """
+    def __init__(self, name, description, product_id, stuffing_type, size, fabric_type, has_glow, **kwargs):
         super().__init__(name, description, product_id, stuffing_type, size, fabric_type)
         self._has_glow = has_glow
+        self._details = kwargs
 
 
 class EasterBunnyColours(Enum):
@@ -110,14 +132,18 @@ class EasterBunnyColours(Enum):
 
 
 class EasterBunny(StuffedAnimals):
-
+    """
+    A Stuffed animals Subclass
+    """
     def __init__(self, name, description, product_id, stuffing_type, size, fabric_type, colour):
         super().__init__(name, description, product_id, stuffing_type, size, fabric_type)
         self._colour = colour
 
 
 class Candy(ABC):
-
+    """
+    A Candy Class, representing a Candy
+    """
     @abstractmethod
     def __init__(self, name, description, product_id, has_nuts, has_lactose):
         self._name = name
@@ -138,18 +164,30 @@ class CandyStripes(Enum):
 
 
 class PumpkinCaramelToffee(Candy):
-    def __init__(self, name, description, product_id, has_nuts, has_lactose, variety):
+    """
+    A Candy subclass
+    """
+    def __init__(self, name, description, product_id, has_nuts, has_lactose, variety, **kwargs):
         super().__init__(name, description, product_id, has_nuts, has_lactose)
         self._variety = variety
+        self._details = kwargs
 
 
 class CandyCanes(Candy):
-    def __init__(self, name, description, product_id, has_nuts, has_lactose, colour):
+    """
+    A Candy subclass
+    """
+    def __init__(self, name, description, product_id, has_nuts, has_lactose, colour, **kwargs):
         super().__init__(name, description, product_id, has_nuts, has_lactose)
         self._colour = colour
+        self._details = kwargs
 
 
 class CremeEggs(Candy):
-    def __init__(self, name, description, product_id, has_nuts, has_lactose, pack_size):
+    """
+    A Candy subclass
+    """
+    def __init__(self, name, description, product_id, has_nuts, has_lactose, pack_size, **kwargs):
         super().__init__(name, description, product_id, has_nuts, has_lactose)
         self._pack_size = pack_size
+        self._details = kwargs
