@@ -17,6 +17,10 @@ class CryptoMode(enum.Enum):
     DE = "de"
 
 
+"""
+"""
+
+
 class Request:
     """
     The request object represents a request to either encrypt or decrypt
@@ -92,10 +96,19 @@ def setup_request_commandline() -> Request:
 
 
 class Crypto:
+    """
+    Crypto class is resposnible for reading and executing input requests.
+    Encrypting and decrypting the data being inputted.
+    """
 
     def __init__(self):
         self.encryption_start_handler = EncryptionHeadHandler()
         self.decryption_start_handler = DecryptionHeadHandler()
+
+    """
+    Executes the request by calling the appropriate handler for each of 
+    the command line inputs.
+    """
 
     def execute_request(self, req: Request):
 
@@ -124,6 +137,10 @@ class Crypto:
 
 
 class BaseCryptoHandler(ABC):
+    """
+    Base ABC class for determining the handler for the given operation
+    in the input.
+    """
 
     def __init__(self, next_handler=None):
         self.next_handler = next_handler
@@ -131,6 +148,10 @@ class BaseCryptoHandler(ABC):
     @abstractmethod
     def handle_request(self, req: Request):
         pass
+
+    """
+    Sets the current operation handler to the next determined handler.
+    """
 
     def set_handler(self, handler):
         self.next_handler = handler
@@ -151,6 +172,10 @@ class DecryptionHeadHandler(BaseCryptoHandler):
 
 
 class ReadFileHandler(BaseCryptoHandler):
+    """
+    Operation handler class for reading input files.
+    This class is an extension of the BaseCryptoHandler abstract classs.
+    """
 
     def handle_request(self, req: Request):
         try:
@@ -168,6 +193,10 @@ class ReadFileHandler(BaseCryptoHandler):
 
 
 class PrintHandler(BaseCryptoHandler):
+    """
+    Operation handler class for Printing data.
+    This class is an extension of the BaseCryptoHandler abstract classs.
+    """
 
     def handle_request(self, req: Request):
         print_mapper = {CryptoMode.EN: "Encryption:",
@@ -179,6 +208,10 @@ class PrintHandler(BaseCryptoHandler):
 
 
 class WriteHandler(BaseCryptoHandler):
+    """
+    Operation handler class for writing outputs to a file.
+    This class is an extension of the BaseCryptoHandler abstract classs.
+    """
 
     def handle_request(self, req: Request):
         try:
@@ -198,6 +231,9 @@ class WriteHandler(BaseCryptoHandler):
 
 
 class EncryptHandler(BaseCryptoHandler):
+    """
+    This class encrypts the data retrieved from the input.
+    """
 
     @staticmethod
     def encrypt_request(req):
@@ -210,6 +246,9 @@ class EncryptHandler(BaseCryptoHandler):
 
 
 class DecryptHandler(BaseCryptoHandler):
+    """
+    This class decrypts the data retrieved from the input or encripted by the program.
+    """
 
     @staticmethod
     def decrypt_request(req):
