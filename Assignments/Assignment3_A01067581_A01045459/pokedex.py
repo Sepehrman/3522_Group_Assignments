@@ -3,17 +3,80 @@ import ast
 import asyncio
 from enum import Enum
 from abc import ABC, abstractmethod
-
 import aiohttp
-# from chain_of_pokemon import MoveHeadHandler, AbilityHeadHandler, NameHeadHandler, MoveHandler, AbilityHandler,\
-#     NameHandler, InputFileHandler, PrintHandler, WriteHandler
-# from chain_of_pokemon import Request, PokeDex, setup_request_commandline
+
 
 
 class PokedexMode(Enum):
     POKEMON = "pokemon"
     ABILITY = "ability"
     MOVE = "move"
+
+
+class PokedexObject:
+    def __init__(self, name, id):
+        self._name = name
+        self._id = id
+
+
+class Pokemon(PokedexObject):
+    def __init__(self, name, id, **kwargs):
+        super().__init__(name, id)
+        self._name = name
+        self._id = id
+        self._abilities = kwargs['abilities']
+        self._height = kwargs['height']
+        self._weight = kwargs['weight']
+        self._types = kwargs['types']
+        self._stats = kwargs['stats']
+        self._moves = kwargs['moves']
+
+    def __repr__(self):
+        return f"Name: {self._name} \nID: {self._id} \nHeight: {self._height} \n" \
+               f"Weight: {self._weight} \nTypes: {self._types} \nStats:" \
+               f"\n------\n\n{self._stats} \nAbilities\n-----\n\n{self._abilities}" \
+               f"\nMoves: \n-----\n" \
+               f"{self._moves}\n "
+
+
+class PokemonMove(PokedexObject):
+    def __init__(self, id: int, name: str, generation: str, accuracy: int, pp: int, power: int, ability_type: str,
+                 damage_class: str, effect_short: str):
+        super().__init__(name, id)
+        self._generation = generation
+        self._accuracy = accuracy
+        self._pp = pp
+        self._power = power
+        self._ability_type = ability_type
+        self._damage_class = damage_class
+        self._effect_short = effect_short
+
+    def __repr__(self):
+        return f"PokemonName: {self._id}, Name: {self._name}, Generation: {self._generation}, " \
+               f"Accuracy: {self._accuracy}, PP: {self._pp}, Power: {self._power}, " \
+               f"Ability Type: {self._ability_type}, Damage: {self._damage_class}, Effect Short: {self._effect_short})"
+
+
+class PokemonAbility(PokedexObject):
+    def __init__(self, name: str, id: int, generation: str, effect: str, effect_short: str, pokemon: list):
+        super().__init__(name, id)
+        self._generation = generation
+        self._effect = effect
+        self._effect_short = effect_short
+        self._pokemon = pokemon
+
+    def __str__(self):
+        return f"Ability(name: {self._name}, id: {self._id}, generation: {self._generation}, effect: {self._effect}," \
+               f"effect_short: {self._effect_short}, pokemon: {self._pokemon})"
+
+
+class PokemonStats(PokedexObject):
+    def __init__(self, name: str, id: int, is_battle_only: bool):
+        super().__init__(name, id)
+        self._is_battle_only = is_battle_only
+
+    def __repr__(self):
+        return f"PokemonStats( Name: {self._name}, Id: {self._id}, IsBattleOnly: {self._is_battle_only})"
 
 
 class Request:
@@ -42,7 +105,6 @@ def setup_request_commandline() -> Request:
     parser.add_argument("-o", "--output", default="print",
                         help="The output of the program. This is 'print' by "
                              "default, but can be set to a file name as well.")
-
     parser.add_argument("--expanded", default="print",
                         help="The app will expand the queries if this argument is provided."
                              " But will simply print the given data if nothing is given.")
@@ -61,38 +123,6 @@ def setup_request_commandline() -> Request:
     except Exception as e:
         print(f"Error! cannot read arguments. {e}")
         # quit()
-
-
-################## CREATE OBJECTS IN HERE?????
-async def get_pokemons_data(id, url, session: aiohttp.ClientSession):
-    target_url = url.format(id)
-    response = await session.request(method="GET", url=target_url)
-    print("Response object from aiohttp:\n", response)
-    print("Response object type:\n", type(response))
-    print("-----")
-    json_dict = await response.json()
-    return json_dict
-
-
-async def process_asyncio_requests(requests: list):
-    url = "https://pokeapi.co/api/v2/pokemon/{}"
-    async with aiohttp.ClientSession() as session:
-        print("***process_requests")
-        async_coroutines = [get_pokemons_data(id_, url, session)
-                            for id_ in requests]
-        responses = await asyncio.gather(*async_coroutines)
-        for response in responses:
-            print(response)
-        return responses
-
-
-async def process_single_request(id: str):
-    url = "https://pokeapi.co/api/v2/pokemon/{}"
-    async with aiohttp.ClientSession() as session:
-        print("***process_single_request")
-        response = await get_pokemons_data(id, url, session)
-        print(response)
-        return response
 
 
 class PokeDex:
@@ -132,22 +162,46 @@ class PokeDex:
             next_handler = WriteHandler()
         else:
             next_handler = PrintHandler()
-        ## APPARENTLY IT'S NOT WRITTING!
-        current_handler.set_handler(next_handler)
 
+        # APPARENTLY IT'S NOT WRITTING!
+        current_handler.set_handler(next_handler)
 
         return head_mapper[req.pokedex_mode].handle_request(req)
         # Check for Expanded:
 
 
+async def get_pokemons_data(id, url, session: aiohttp.ClientSession):
+    target_url = url.format(id)
+    response = await session.request(method="GET", url=target_url)
+    print("Response object from aiohttp:\n", response)
+    print("Response object type:\n", type(response))
+    print("-----")
+    json_dict = await response.json()
+    pok = Pokemon(**json_dict)
+    print(pok)
+    # print(json_dict)
+    return json_dict
 
 
-        # if req.expanded != "expanded":
-            # next_handler =
+async def process_asyncio_requests(requests: list):
+    url = "https://pokeapi.co/api/v2/pokemon/{}"
+    async with aiohttp.ClientSession() as session:
+        print("***process_requests")
+        async_coroutines = [get_pokemons_data(id_, url, session)
+                            for id_ in requests]
+        responses = await asyncio.gather(*async_coroutines)
+        for response in responses:
+            print(response)
+        return responses
 
 
-
-#@############## CHAIN OF RESONSIBILITY ##################################
+async def process_single_request(id: str):
+    url = "https://pokeapi.co/api/v2/pokemon/{}"
+    async with aiohttp.ClientSession() as session:
+        print("***process_single_request")
+        response = await get_pokemons_data(id, url, session)
+        print(response)
+        return response
 
 
 class BasePokemonHandler(ABC):
@@ -191,22 +245,8 @@ class MoveHandler(BasePokemonHandler):
 
 class NameHandler(BasePokemonHandler):
 
-    @staticmethod
-    async def process_queries(requests: list) -> list:
-            requests = process_asyncio_requests(requests)
-
     def handle_request(self, req: Request):
-
-
-        async def process_requests(requests: list) -> list:
-            """
-            This function depicts the use of asyncio.gather to run multiple
-            async coroutines concurrently.
-            :param requests: a list of int's
-            :return: list of dict, collection of response data from the endpoint.
-            """
-            url = "https://swapi.dev/api/people/{}/"
-
+        pass
 
 
 class AbilityHandler(BasePokemonHandler):
@@ -257,12 +297,12 @@ class WriteHandler(BasePokemonHandler):
             print("Please provide the correct filename or check if file exists in current directory")
 
 
-def main(request: Request):
+
+
+def main(req: Request):
     loop = asyncio.get_event_loop()
-    responses = loop.run_until_complete(process_asyncio_requests(['Pikachu', '2']))
-
-    PokeDex().execute_requests(request)
-
+    responses = loop.run_until_complete(process_asyncio_requests(['24', '25']))
+    PokeDex().execute_requests(req)
 
 
 
