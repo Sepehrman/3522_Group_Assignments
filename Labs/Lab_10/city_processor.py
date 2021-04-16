@@ -3,16 +3,17 @@ This module contains the data structures and code to query the
 Open Notify API and process the times that the ISS will be directly
 overhead a city.
 """
-import requests
-import pandas
-import json
 import datetime
+import json
+import pandas
+import requests
 
 
 def jprint(obj):
     """
     Create and print a formatted string of the Python JSON object
     """
+    #
     text = json.dumps(obj, sort_keys=True, indent=4)
     print(text)
 
@@ -45,6 +46,9 @@ class City:
         self.lng = lng
 
     def __str__(self):
+        """
+        String representation of City class.
+        """
         return f"City: {self.city_name}, Lat: {self.lat}, Lng: {self.lng}"
 
 
@@ -89,10 +93,19 @@ class OverheadPassEvent:
     """
 
     def __init__(self, duration, risetime):
+        """
+        Initializes the OverheadPassEvent class.
+
+        :param duration: int
+        :param risetime: int
+        """
         self.duration = duration
         self.risetime = datetime.datetime.fromtimestamp(risetime)
 
     def __str__(self):
+        """
+        String representation of Overhead Pass Event class.
+        """
         return f"{self.risetime} for {self.duration} seconds"
 
 
@@ -118,12 +131,15 @@ class CityOverheadTimes:
             self.passes.append(OverheadPassEvent(**arg))
 
     def __str__(self):
+        """
+        String representation of City Overhead Times class.
+        """
         times = []
         for iss_pass in self.passes:
             times.append(str(iss_pass))
         times = '\n'.join(times)
         return f"The ISS will pass over {self.city.city_name} " \
-            f"{len(self.passes)} times. The times are: \n {times}"
+               f"{len(self.passes)} times. The times are: \n {times}"
 
 
 class ISSDataRequest:
@@ -135,25 +151,31 @@ class ISSDataRequest:
     """
 
     # The url to the overhead pass endpoint form the Open notify API
-    # OPEN_NOTIFY_OVERHEAD_PASS_URL =
+    OPEN_NOTIFY_OVERHEAD_PASS_URL = "http://api.open-notify.org/iss-pass.json?lat={}&lon={}"
 
     @classmethod
     def get_overhead_pass(cls, city: City) -> CityOverheadTimes:
-        response = requests.get(f"http://api.open-notify.org/iss-pass.json?lat={city.lat}&lon={city.lng}")
+        """
+        Method gets the over head pass.
+
+        :param city: ab object of City
+        :return: and instance of the CityOverheadTimes object.
+        """
+        connection_string = cls.OPEN_NOTIFY_OVERHEAD_PASS_URL.format(city.lat, city.lng)
+        response = requests.get(connection_string)
         data = response.json()
-        return CityOverheadTimes(city, *data["response"])
+        city_overhead_times = CityOverheadTimes(city, *data.get("response"))
+        return city_overhead_times
 
 
 def main():
-    request_one = ISSDataRequest()
-    cities = CityDatabase("city_locations_test.xlsx")
-    collections = []
-    # queue = CityOverheadTimeQueue()
-    for city in cities.city_db:
-        # queue.put(request_one.get_overhead_pass(city))
-        collections.append(request_one.get_overhead_pass(city))
+    """
+    Drives the program.
+    """
+    city_database = CityDatabase("city_locations_test.xlsx")
+    for city in city_database.city_db:
+        print(ISSDataRequest.get_overhead_pass(city))
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
