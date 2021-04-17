@@ -9,7 +9,9 @@ from request_module import get_pokemons_data
 
 
 class BasePokemonHandler(ABC):
-
+    """
+    The Base Pokemon Handler
+    """
     def __init__(self, next_handler=None):
         self.next_handler = next_handler
 
@@ -22,18 +24,27 @@ class BasePokemonHandler(ABC):
 
 
 class NameHeadHandler(BasePokemonHandler):
+    """
+    The Name Head Handler
+    """
     def handle_request(self, req: Request):
         if self.next_handler is not None:
             self.next_handler.handle_request(req)
 
 
 class MoveHeadHandler(BasePokemonHandler):
+    """
+    The Move Head Handler
+    """
     def handle_request(self, req: Request):
         if self.next_handler is not None:
             self.next_handler.handle_request(req)
 
 
 class AbilityHeadHandler(BasePokemonHandler):
+    """
+    The Ability Head Handler
+    """
 
     def handle_request(self, req: Request):
         if self.next_handler is not None:
@@ -41,7 +52,9 @@ class AbilityHeadHandler(BasePokemonHandler):
 
 
 class MoveHandler(BasePokemonHandler):
-
+    """
+    The Move Handler, gathering pokedex Move requests
+    """
     @staticmethod
     async def process_asyncio_requests(queries):
         url = "https://pokeapi.co/api/v2/move/{}"
@@ -63,6 +76,9 @@ class MoveHandler(BasePokemonHandler):
 
 
 class NameHandler(BasePokemonHandler):
+    """
+    The Name Handler, gathering pokedex Name requests
+    """
     @staticmethod
     async def process_asyncio_requests(queries):
         url = "https://pokeapi.co/api/v2/pokemon/{}"
@@ -91,7 +107,9 @@ class NameHandler(BasePokemonHandler):
 
 
 class AbilityHandler(BasePokemonHandler):
-
+    """
+    The Ability Handler, gathering pokedex ability requests
+    """
     @staticmethod
     async def process_asyncio_requests(queries):
         url = "https://pokeapi.co/api/v2/ability/{}"
@@ -113,7 +131,9 @@ class AbilityHandler(BasePokemonHandler):
 
 
 class InputFileHandler(BasePokemonHandler):
-
+    """
+    A Handler for input files
+    """
     def handle_request(self, req: Request):
         try:
             print("Inputfile")
@@ -126,7 +146,9 @@ class InputFileHandler(BasePokemonHandler):
 
 
 class InputDataHandler(BasePokemonHandler):
-
+    """
+    A handler for Data inputs
+    """
     def handle_request(self, req: Request):
         req.queries_data = req.input_data
         if self.next_handler is not None:
@@ -134,6 +156,9 @@ class InputDataHandler(BasePokemonHandler):
 
 
 class PrintHandler(BasePokemonHandler):
+    """
+    A Print handler if there is no output file mentioned
+    """
     def handle_request(self, req: Request):
         print("\n----- Printing to Console ----- \n")
         for poke in req.pokedex_list:
@@ -143,6 +168,9 @@ class PrintHandler(BasePokemonHandler):
 
 
 class WriteHandler(BasePokemonHandler):
+    """
+    A Write handler responsible for writing onto an output file
+    """
     def handle_request(self, req: Request):
         try:
             with open(req.output, 'w', encoding='utf-8') as export_file:

@@ -7,13 +7,26 @@ from request_module import Request, setup_request_commandline
 
 
 class PokeDex:
+    """
+    A Pokedex class responsible for handling requests
+    """
 
     def __init__(self):
+        """
+        An initializer for the Pokedex
+        """
+
         self.pokemon_name_handler = NameHeadHandler()
         self.pokemon_ability_handler = AbilityHeadHandler()
         self.pokemon_move_handler = MoveHeadHandler()
 
-    def execute_requests(self, req):
+    def execute_requests(self, req: Request):
+        """
+        Executes the request by calling the appropriate handler for each of
+        the command line inputs.
+        :param req: a request object
+        :return: A Request object
+        """
 
         head_mapper = {PokedexMode.POKEMON: self.pokemon_name_handler,
                        PokedexMode.ABILITY: self.pokemon_ability_handler,

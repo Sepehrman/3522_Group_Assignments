@@ -2,18 +2,27 @@ from enum import Enum
 
 
 class PokedexMode(Enum):
+    """
+    A Pokedex Mode Enum
+    """
     POKEMON = "pokemon"
     ABILITY = "ability"
     MOVE = "move"
 
 
 class PokedexObject:
+    """
+    A Pokedex Supeclass
+    """
     def __init__(self, name, id, **kwargs):
         self._name = name
         self._id = id
 
 
 class Pokemon(PokedexObject):
+    """
+    A Pokemon class with given attributes
+    """
     def __init__(self, height, weight, stats, types, abilities, moves, expanded, expanded_moves=None,
                  expanded_abilities=None, **kwargs):
         super().__init__(**kwargs)
@@ -53,8 +62,12 @@ class Pokemon(PokedexObject):
 
 
 class PokemonMove(PokedexObject):
+    """
+    A Pokemon Object representing its move attributes
+    """
     def __init__(self, generation: str, accuracy: int, pp: int, power: int, type: str,
                  damage_class: str, effect_entries, expanded, expanded_pokemons=None, expanded_abilities=None, **kwargs):
+
         super().__init__(**kwargs)
         self._generation = dict(generation).get('name')
         self._accuracy = accuracy
@@ -89,6 +102,9 @@ class PokemonMove(PokedexObject):
 
 
 class PokemonAbility(PokedexObject):
+    """
+    A Pokemon object that includes a ability attributes
+    """
     def __init__(self, generation: str, effect_entries: str, pokemon: list, expanded, **kwargs):
         super().__init__(**kwargs)
         self._generation = dict(generation).get('name')
@@ -106,6 +122,9 @@ class PokemonAbility(PokedexObject):
 
 
 class PokemonStats(PokedexObject):
+    """
+    A Pokemon Stats object
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._is_battle_only = kwargs.get('')

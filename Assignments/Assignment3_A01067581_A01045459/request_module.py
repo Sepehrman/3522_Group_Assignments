@@ -6,6 +6,9 @@ from pokemon import PokedexMode
 
 
 class Request:
+    """
+    A Request class
+    """
 
     def __init__(self):
         self.pokedex_mode = None
@@ -24,6 +27,13 @@ class Request:
 
 
 async def get_pokemons_data(id, url, session: aiohttp.ClientSession):
+    """
+    Provides the Pokemon information using the details given
+    :param id: an Int
+    :param url: a String
+    :param session: a ClientSession
+    :return: a JSON Dicitonary
+    """
     target_url = url.format(id)
     response = await session.request(method="GET", url=target_url)
     json_dict = await response.json()
@@ -31,6 +41,10 @@ async def get_pokemons_data(id, url, session: aiohttp.ClientSession):
 
 
 def setup_request_commandline() -> Request:
+    """
+    A method responsible for setting up the command line and returning a request object
+    :return: A Request
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", "-m", help="Should be either ability, move, or pokemon")
     group_args = parser.add_mutually_exclusive_group()
