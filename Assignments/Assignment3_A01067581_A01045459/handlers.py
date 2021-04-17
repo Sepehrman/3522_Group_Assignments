@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 from abc import ABC, abstractmethod
 import aiohttp
 
@@ -47,14 +48,14 @@ class MoveHandler(BasePokemonHandler):
         async with aiohttp.ClientSession() as session:
             print("*** Processing your Pokemon Requests ***")
             async_coroutines = [get_pokemons_data(id_, url, session)
-                                for id_ in queries]
+                                for id_ in queries.queries_data]
             responses = await asyncio.gather(*async_coroutines)
-            poke_list = [PokemonMove(**res) for res in responses]
+            poke_list = [PokemonMove(**res, expanded=queries.expanded) for res in responses]
             return poke_list
 
     def handle_request(self, req: Request):
         loop = asyncio.get_event_loop()
-        responses = loop.run_until_complete(self.process_asyncio_requests(req.queries_data))
+        responses = loop.run_until_complete(self.process_asyncio_requests(req))
         req.pokedex_list = responses
         req.requests_count = len(responses)
         if self.next_handler is not None:
@@ -68,14 +69,21 @@ class NameHandler(BasePokemonHandler):
         async with aiohttp.ClientSession() as session:
             print("*** Processing your Pokemon Requests ***")
             async_coroutines = [get_pokemons_data(id_, url, session)
-                                for id_ in queries]
+                                for id_ in queries.queries_data]
             responses = await asyncio.gather(*async_coroutines)
-            poke_list = [Pokemon(**res) for res in responses]
+            if queries.expanded:
+                moves_list = await MoveHandler().process_asyncio_requests(queries)
+
+                abilities_list = await AbilityHandler().process_asyncio_requests(queries)
+                poke_list = [Pokemon(**res, expanded=queries.expanded, expanded_moves=moves_list,
+                                     expanded_abilities=abilities_list) for res in responses]
+            else:
+                poke_list = [Pokemon(**res, expanded=queries.expanded) for res in responses]
             return poke_list
 
     def handle_request(self, req: Request):
         loop = asyncio.get_event_loop()
-        responses = loop.run_until_complete(self.process_asyncio_requests(req.queries_data))
+        responses = loop.run_until_complete(self.process_asyncio_requests(req))
         req.pokedex_list = responses
         req.requests_count = len(responses)
         if self.next_handler is not None:
@@ -90,19 +98,18 @@ class AbilityHandler(BasePokemonHandler):
         async with aiohttp.ClientSession() as session:
             print("*** Processing your Pokemon Requests ***")
             async_coroutines = [get_pokemons_data(id_, url, session)
-                                for id_ in queries]
+                                for id_ in queries.queries_data]
             responses = await asyncio.gather(*async_coroutines)
-            poke_list = [PokemonAbility(**res) for res in responses]
+            poke_list = [PokemonAbility(**res, expanded=queries.expanded) for res in responses]
             return poke_list
 
     def handle_request(self, req: Request):
         loop = asyncio.get_event_loop()
-        responses = loop.run_until_complete(self.process_asyncio_requests(req.queries_data))
+        responses = loop.run_until_complete(self.process_asyncio_requests(req))
         req.pokedex_list = responses
         req.requests_count = len(responses)
         if self.next_handler is not None:
             self.next_handler.handle_request(req)
-
 
 
 class InputFileHandler(BasePokemonHandler):
@@ -139,17 +146,14 @@ class WriteHandler(BasePokemonHandler):
     def handle_request(self, req: Request):
         try:
             with open(req.output, 'w', encoding='utf-8') as export_file:
-                output_result = ''
+                output = ''
+                for object_result in req.pokedex_list:
+                    output += str(object_result)
+                time_now = datetime.datetime.now().strftime("%d/%m/%y %H:%M")
 
-                export_file.write(output_result)
+                export_file.write(f'Timestamp: {time_now}\nNumber Of Requests: {req.requests_count}\n' + output)
             print(f"------ Exported to {req.output} ------")
             if self.next_handler is not None:
                 self.next_handler.handle_request(req)
         except FileNotFoundError:
             print("Please provide the correct filename or check if file exists in current directory")
-
-class ExpandedHandler(BasePokemonHandler):
-
-    def handle_request(self, req: Request):
-        Pokemon.set_to_expanded()
-
