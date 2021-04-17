@@ -15,10 +15,12 @@ class Request:
         self.output = None
         self.queries_data = None
         self.pokedex_list = None
+        self.requests_count = None
 
     def __str__(self):
         return f"Request: Mode: {self.pokedex_mode}, InputData: {self.input_data}, InputFile: {self.input_file}, " \
-               f"Output: {self.output}, Expanded: {self.expanded}, QueryData = {self.queries_data}"
+               f"Output: {self.output}, Expanded: {self.expanded}, QueryData = {self.queries_data}, " \
+               f"NumberOfRequests {self.requests_count}"
 
 
 async def get_pokemons_data(id, url, session: aiohttp.ClientSession):
@@ -37,7 +39,7 @@ def setup_request_commandline() -> Request:
     parser.add_argument("-o", "--output", default="print",
                         help="The output of the program. This is 'print' by "
                              "default, but can be set to a file name as well.")
-    parser.add_argument("--expanded", default="print",
+    parser.add_argument("--expanded", default=False, action="store_true",
                         help="The app will expand the queries if this argument is provided."
                              " But will simply print the given data if nothing is given.")
 
@@ -48,6 +50,7 @@ def setup_request_commandline() -> Request:
         requ.input_data = args.inputdata
         requ.input_file = args.inputfile
         requ.output = args.output
+        requ.expanded = args.expanded
         if requ.input_file is not None and ".txt" not in requ.input_file:
             requ.input_file, requ.input_data = None, args.inputfile
         print(requ)

@@ -1,7 +1,7 @@
 import asyncio
 
 from handlers import NameHeadHandler, MoveHeadHandler, InputFileHandler, NameHandler, InputDataHandler, \
-    MoveHandler, AbilityHandler, WriteHandler, PrintHandler, AbilityHeadHandler
+    MoveHandler, AbilityHandler, WriteHandler, PrintHandler, AbilityHeadHandler, ExpandedHandler
 from pokemon import PokedexMode
 from request_module import Request, setup_request_commandline
 
@@ -28,6 +28,11 @@ class PokeDex:
         current_handler.set_handler(next_handler)
         current_handler = next_handler
 
+        # Check if it is expandable
+        if req.expanded == True:
+            next_handler = ExpandedHandler()
+        current_handler.set_handler(next_handler)
+
         # Check for Pokedex Mode
         if req.pokedex_mode == PokedexMode.POKEMON:
             next_handler = NameHandler()
@@ -43,9 +48,9 @@ class PokeDex:
             next_handler = WriteHandler()
         else:
             next_handler = PrintHandler()
-
-        # APPARENTLY IT'S NOT WRITTING!
         current_handler.set_handler(next_handler)
+
+
 
         return head_mapper[req.pokedex_mode].handle_request(req)
         # Check for Expanded

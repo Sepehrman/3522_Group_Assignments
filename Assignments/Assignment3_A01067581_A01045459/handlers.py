@@ -6,6 +6,7 @@ from pokemon import Pokemon, PokemonStats, PokemonAbility, PokemonMove
 from request_module import Request
 from request_module import get_pokemons_data
 
+
 class BasePokemonHandler(ABC):
 
     def __init__(self, next_handler=None):
@@ -55,6 +56,7 @@ class MoveHandler(BasePokemonHandler):
         loop = asyncio.get_event_loop()
         responses = loop.run_until_complete(self.process_asyncio_requests(req.queries_data))
         req.pokedex_list = responses
+        req.requests_count = len(responses)
         if self.next_handler is not None:
             self.next_handler.handle_request(req)
 
@@ -75,6 +77,7 @@ class NameHandler(BasePokemonHandler):
         loop = asyncio.get_event_loop()
         responses = loop.run_until_complete(self.process_asyncio_requests(req.queries_data))
         req.pokedex_list = responses
+        req.requests_count = len(responses)
         if self.next_handler is not None:
             self.next_handler.handle_request(req)
 
@@ -90,12 +93,13 @@ class AbilityHandler(BasePokemonHandler):
                                 for id_ in queries]
             responses = await asyncio.gather(*async_coroutines)
             poke_list = [PokemonAbility(**res) for res in responses]
-            queries.pokedex_list = poke_list
+            return poke_list
 
     def handle_request(self, req: Request):
         loop = asyncio.get_event_loop()
         responses = loop.run_until_complete(self.process_asyncio_requests(req.queries_data))
         req.pokedex_list = responses
+        req.requests_count = len(responses)
         if self.next_handler is not None:
             self.next_handler.handle_request(req)
 
@@ -135,10 +139,17 @@ class WriteHandler(BasePokemonHandler):
     def handle_request(self, req: Request):
         try:
             with open(req.output, 'w', encoding='utf-8') as export_file:
-                export_file.write(''.join(str(req.pokedex_list)))
+                output_result = ''
+
+                export_file.write(output_result)
             print(f"------ Exported to {req.output} ------")
             if self.next_handler is not None:
                 self.next_handler.handle_request(req)
         except FileNotFoundError:
             print("Please provide the correct filename or check if file exists in current directory")
+
+class ExpandedHandler(BasePokemonHandler):
+
+    def handle_request(self, req: Request):
+        Pokemon.set_to_expanded()
 

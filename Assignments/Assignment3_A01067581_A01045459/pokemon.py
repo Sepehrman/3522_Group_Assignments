@@ -24,6 +24,9 @@ class Pokemon(PokedexObject):
         self._moves = moves
         self._expanded = False
 
+    def set_to_expanded(self):
+        self._expanded = True
+
     def get_types(self):
         return ''.join([poke_type.get('type').get('name') for poke_type in self._types])
 
@@ -46,55 +49,51 @@ class Pokemon(PokedexObject):
                    f"Weight: {self._weight} \nTypes: {self.get_types()} \n" \
                    f"\n------\nStats:\n{self.get_stats()} \n\n-----\nAbilities:\n{self.get_abilities()}" \
                    f"\n\n-----\nMoves:\n" \
-                   f"{self.get_moves()}\n\n"
+                   f"{self.get_moves()}\nIs Expanded: {self._expanded}\n\n"
 
 
 class PokemonMove(PokedexObject):
     def __init__(self, generation: str, accuracy: int, pp: int, power: int, type: str,
                  damage_class: str, effect_entries, **kwargs):
         super().__init__(**kwargs)
-        self._generation = generation
+        self._generation = dict(generation).get('name')
         self._accuracy = accuracy
         self._pp = pp
         self._power = power
-        self._ability_type = type
-        self._damage_class = damage_class
+        self._ability_type = dict(type).get('name')
+        self._damage_class = dict(damage_class).get('name')
         self._effect_short = effect_entries[0]
+        self._expanded = False
 
-    def get_generation(self):
-        return dict(self._generation).get('name')
-
-    def get_ability_type(self):
-        return dict(self._ability_type).get('name')
-
-    def get_damage_class(self):
-        return dict(self._damage_class).get('name')
-
-    def get_effect(self):
-        return self._effect_short.get('effect')
+    def set_to_expanded(self):
+        self._expanded = True
 
     def get_effect_short(self):
         return self._effect_short.get('short_effect')
 
     def __repr__(self):
-        return f"ID: {self._id}\nName: {self._name} \nGeneration: {self.get_generation()} " \
+        return f"ID: {self._id}\nName: {self._name} \nGeneration: {self._generation} " \
                f"\nAccuracy: {self._accuracy}\nPP: {self._pp} \nPower: {self._power} " \
-               f"\nAbility Type: {self.get_ability_type()} \nDamage: {self.get_damage_class()} " \
-               f"\nEffect: {self.get_effect()}" \
-               f"\n\nEffect Short: {self.get_effect_short()}\n\n"
+               f"\nAbility Type: {self._ability_type} \nDamage: {self._damage_class} " \
+               f"\nEffect (Short): {self.get_effect_short()}" \
+               f"\nIs Expanded: {self._expanded}\n\n"
 
 
 class PokemonAbility(PokedexObject):
-    def __init__(self, generation: str, effect: str, effect_short: str, pokemon: list, **kwargs):
+    def __init__(self, generation: str, effect_entries: str, pokemon: list, **kwargs):
         super().__init__(**kwargs)
-        self._generation = generation
-        self._effect = effect
-        self._effect_short = effect_short
-        self._pokemon = pokemon
+        self._generation = dict(generation).get('name')
+        self._effect = dict(effect_entries[1]).get('effect')
+        self._effect_short = dict(effect_entries[1]).get('short_effect')
+        self._pokemon = ', '.join(([poke_name.get('pokemon').get('name') for poke_name in pokemon]))
+        self._expanded = False
+
+    def set_to_expanded(self):
+        self._expanded = True
 
     def __repr__(self):
-        return f"Ability(name: {self._name}, id: {self._id}, generation: {self._generation}, effect: {self._effect}," \
-               f"effect_short: {self._effect_short}, pokemon: {self._pokemon})"
+        return f"Ability Name: {self._name}\nID: {self._id}\nGeneration: {self._generation} \nEffect: {self._effect}" \
+               f"\nEffect (Short): {self._effect_short}\nPokemon: {self._pokemon}\nIs Expanded: {self._expanded}\n\n"
 
 
 class PokemonStats(PokedexObject):
@@ -103,4 +102,4 @@ class PokemonStats(PokedexObject):
         self._is_battle_only = is_battle_only
 
     def __repr__(self):
-        return f"PokemonStats( Name: {self._name}, Id: {self._id}, IsBattleOnly: {self._is_battle_only})"
+        return f"Name: {self._name}\nID: {self._id}\nIs Battle Only: {self._is_battle_only}\n\n"
