@@ -1,28 +1,40 @@
-# PokeAPI
-Marketplace is a web application that allows users to signup and register for the application with the ability to post products online with title, price, and description.
-It allows direct Emailing to other sellers using the SocketLabs API
+# PokeAPI Command Line Application
+A Commandline RESTful API using PokeAPI and usage of Chain of Responsibility Design Pattern to display pokemons' movements, powers, and abilities.
 
 ## Installation
 
 1. clone the repo using:
 ```bash
-git clone https://github.com/Sepehrman/PHP-Marketplace-Project.git
-```
-
-2. Make Sure you have a Local Development Server Installed on your Machine (Wamp, Xamp, & etc.) and create the following tables on your mySQL Server
-```SQL
-CREATE TABLE user (id int primary key auto_increment, firstname varchar(255), lastname varchar(255), email varchar(255), password varchar(255), pinned LONGTEXT, downvotes LONGTEXT);
-
-CREATE TABLE products (id int primary key auto_increment, title varchar(255), price decimal(6,2), description MEDIUMTEXT, picture varchar(255), author varchar(255), author_email varchar(255), downvotes_count int, time_added varchar(255));
-
+git clone https://github.com/Sepehrman/3522_Group_Assignments/tree/main/Assignments/Assignment3_A01067581_A01045459
 ```
 
 
-3. Move the project to the Development Folder and run
 
 ## Application Startup
+Simply run the program using
+```python
+python pokedex.py
+```
 
-![image](https://user-images.githubusercontent.com/59620701/137554616-924e7eae-59b2-429c-9d0f-05d3226788ec.png)
+### Use the following argument to receive the details of the application
+```python
+python pokedex.py --help
+```
+```bash
+optional arguments:
+  -h, --help            show this help message and exit
+  --mode MODE, -m MODE  Should be either ability, move, or pokemon
+  --inputfile INPUTFILE
+                        File input needs to be .txt
+  --inputdata INPUTDATA [INPUTDATA ...]
+                        Input must be name or id
+  -o OUTPUT, --output OUTPUT
+                        The output of the program. This is 'print' by default, but can be set to a file name as well.
+  --expanded            The app will expand the queries if this argument is provided. But will simply print the given data if nothing is given.
+
+```
+
+
 
 ## Signup, Login & Add An Item For Sale!
 
