@@ -42,7 +42,7 @@ python pokedex.py -m ability --inputdata 5
 
 
 ### Which results in:
-```bash
+```
 Request: Mode: PokedexMode.ABILITY, InputData: ['5'], InputFile: None, Output: print, Expanded: False, QueryData = None, NumberOfRequests None
 *** Processing your Pokemon Requests ***
 
@@ -68,7 +68,7 @@ python pokedex.py -m move --inputdata 1 2 3 -o abilities.txt
 ```
 
 # Resulting in:
-```bash
+```
 *** Processing your Pokemon Requests ***
 
 ----- Printing to Console -----
