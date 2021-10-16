@@ -33,15 +33,15 @@ optional arguments:
   --expanded            The app will expand the queries if this argument is provided. But will simply print the given data if nothing is given.
 
 ```
-#### mode of the abilities can be either ability, move, or pokemon to GET the necessary information
 
 
-
-### We can simply run the program by passing in one specific data input or multiple csv inputs:
+#### mode of the abilities can be either ability, move, or pokemon to GET the necessary information. We can simply run the program by passing in one specific data input or multiple csv inputs:
 ```python
 python pokedex.py -m ability --inputdata 5
 ```
-### Which results
+
+
+### Which results in:
 ```bash
 Request: Mode: PokedexMode.ABILITY, InputData: ['5'], InputFile: None, Output: print, Expanded: False, QueryData = None, NumberOfRequests None
 *** Processing your Pokemon Requests ***
@@ -59,30 +59,3 @@ Pokemon: geodude, graveler, golem, magnemite, magneton, onix, sudowoodo, pineco,
 , roggenrola, boldore, gigalith, sawk, dwebble, crustle, tirtouga, carracosta, tyrunt, carbink, bergmite, avalugg, togedemaru, cosmoem, geodude-alola, graveler-alola, golem-alola, togedemaru-totem
 Is Expanded: False
 ```
-
-
-
-
-
-
-## Signup, Login & Add An Item For Sale!
-
-<p float="left">
-  <img src="https://user-images.githubusercontent.com/59620701/137555057-722868a3-db36-40c3-81ca-be9de0900e44.png" width="500" />
-  <img src="https://user-images.githubusercontent.com/59620701/137555315-b17be1e3-956c-4ef6-89d9-11d1b1224d84.png" width="500" /> 
-  <img src="https://user-images.githubusercontent.com/59620701/137558424-ddf1fddf-1be6-4275-8afc-9542c73d1d69.png" width="500" />
-</p>
-
-
-## Delete, Rate, & view Products and Message the Sellers!
-<p float="left">
-  <img src="https://user-images.githubusercontent.com/59620701/137558518-2f384401-020f-4f57-825e-422105e58827.png" width="500"/>
-  <img src="https://user-images.githubusercontent.com/59620701/137558612-dbe9e243-ade3-46a4-a0f0-3c46f10a7cd2.png" width="500"/>
-  <img src="https://user-images.githubusercontent.com/59620701/137558250-f8e1c869-750c-4daf-84ee-ad874bac6358.png" width="500"/>
-  <img src="https://user-images.githubusercontent.com/59620701/137558754-6da74de4-77a2-45ea-a69c-78e3532c50e0.png" width="500"/>
-</p>
-
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
