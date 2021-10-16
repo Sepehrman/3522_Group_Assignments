@@ -35,7 +35,7 @@ optional arguments:
 ```
 
 
-#### mode of the abilities can be either ability, move, or pokemon to GET the necessary information. We can simply run the program by passing in one specific data input or multiple csv inputs:
+#### mode of the abilities can be either ability, move, or pokemon to GET the necessary information. We can simply run the program by passing in one specific data input or multiple inputs:
 ```python
 python pokedex.py -m ability --inputdata 5
 ```
