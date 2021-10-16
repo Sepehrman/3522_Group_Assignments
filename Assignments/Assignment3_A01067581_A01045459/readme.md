@@ -64,7 +64,7 @@ Is Expanded: False
 
 ### An Example of Multiple moves with an output to a file would look like:
 ```python
-python pokedex.py -m move --inputdata 1 2 3
+python pokedex.py -m move --inputdata 1 2 3 -o abilities.txt
 ```
 
 # Resulting in:
