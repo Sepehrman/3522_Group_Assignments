@@ -59,3 +59,58 @@ Pokemon: geodude, graveler, golem, magnemite, magneton, onix, sudowoodo, pineco,
 , roggenrola, boldore, gigalith, sawk, dwebble, crustle, tirtouga, carracosta, tyrunt, carbink, bergmite, avalugg, togedemaru, cosmoem, geodude-alola, graveler-alola, golem-alola, togedemaru-totem
 Is Expanded: False
 ```
+
+
+
+### An Example of Multiple moves with an output to a file would look like:
+```python
+python pokedex.py -m move --inputdata 1 2 3
+```
+
+# Resulting in:
+```bash
+*** Processing your Pokemon Requests ***
+
+----- Printing to Console -----
+
+ID: 1
+Name: pound
+Generation: generation-i
+Accuracy: 100
+PP: 35
+Power: 40
+Ability Type: normal
+Damage: physical
+Effect (Short): Inflicts regular damage with no additional effect.
+Is Expanded: False
+
+
+ID: 2
+Name: karate-chop
+Generation: generation-i
+Accuracy: 100
+PP: 25
+Power: 50
+Ability Type: fighting
+Damage: physical
+Effect (Short): Has an increased chance for a critical hit.
+Is Expanded: False
+
+
+ID: 3
+Name: double-slap
+Generation: generation-i
+Accuracy: 85
+PP: 10
+Power: 15
+Ability Type: normal
+Damage: physical
+Effect (Short): Hits 2-5 times in one turn.
+Is Expanded: False
+
+
+```
+
+
+
+
