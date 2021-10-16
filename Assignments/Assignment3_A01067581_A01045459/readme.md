@@ -33,6 +33,12 @@ optional arguments:
   --expanded            The app will expand the queries if this argument is provided. But will simply print the given data if nothing is given.
 
 ```
+#### mode of the abilities can be either ability, move, or pokemon to GET the necessary information
+### We can simply run the program by passing in one specific data input or multiple csv inputs:
+
+```python
+python pokedex.py -m ability --inputdata 1 2 3
+```
 
 
 
